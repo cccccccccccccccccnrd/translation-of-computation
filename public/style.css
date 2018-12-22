@@ -1,0 +1,59 @@
+::selection {
+  color: white;
+  background: blue;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Inconsolata', monospace;
+  font-size: 16px;
+  color: white;
+  background: black;
+}
+
+section {
+  width: 100%;
+}
+
+p {
+  margin: 2em 0;
+  font-size: 1em;
+}
+
+.link {
+  cursor: pointer;
+  user-select: none;
+}
+
+.flex {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.indent {
+  max-width: 400px;
+  height: 100%;
+}
+
+.main {
+  margin-top: 2em;
+}
+
+#color {
+  width: 100%;
+  height: 75px;
+  min-height: 5px;
+}
+
+@media screen and (max-width: 450px) {
+  .indent {
+    width: 90%;
+  }
+}
