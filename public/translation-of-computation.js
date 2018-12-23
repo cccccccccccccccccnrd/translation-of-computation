@@ -76,8 +76,11 @@ rgb.addEventListener('focusout', () => {
 rgb.addEventListener('input', () => {
   const values = rgb.value.split(',').map(value => Number.parseInt(value))
 
-  console.log(values)
   if (values.length !== 3) {
+    sample.style.background = 'white'
+    label.classList.add('hidden')
+    return
+  } else if (values.some(e => isNaN(e))) { 
     sample.style.background = 'white'
     label.classList.add('hidden')
     return
@@ -89,8 +92,6 @@ rgb.addEventListener('input', () => {
     sample.style.background = `rgb(${ values[0] }, ${ values[1] }, ${ values[2] })`
     predict()
   }
-
-  console.log(values)
 })
 
 violet.addEventListener('click', () => {
