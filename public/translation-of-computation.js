@@ -62,6 +62,10 @@ const app = new Vue({
     validation: function () {
       const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value))
 
+      if (values[0]) this.color.r = values[0]
+      if (values[1]) this.color.g = values[1]
+      if (values[2]) this.color.b = values[2]
+
       if (values.length !== 3) {
         this.inputs.invalid = true
         this.inputs.hide = true
