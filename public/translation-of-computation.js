@@ -19,7 +19,7 @@ const client = Math.random().toString(16).slice(2)
 async function predict () {
   const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
 
-  const values = rgb.value.split(',').map(value => value / 255)
+  const values = rgb.value.split(',').map(value => Number.parseInt(value) / 255)
   const xs = tf.tensor2d([values])
   
   const prediction = model.predict(xs)
@@ -76,11 +76,8 @@ rgb.addEventListener('focusout', () => {
 rgb.addEventListener('input', () => {
   const values = rgb.value.split(',').map(value => Number.parseInt(value))
 
+  console.log(values)
   if (values.length !== 3) {
-    sample.style.background = 'white'
-    label.classList.add('hidden')
-    return
-  } else if (values.some(e => isNaN(e))) { 
     sample.style.background = 'white'
     label.classList.add('hidden')
     return
