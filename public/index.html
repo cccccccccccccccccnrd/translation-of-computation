@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
+  
   <title>translation of computation</title>
 </head>
 
@@ -22,8 +24,11 @@
       </p>
     </section>
     <section>
-      <div id="color"></div>
-      <p id="rgb"></p>
+      <div id="color" class="color"></div>
+      <section class="flex-row">
+        <input id="rgb" type="text" />
+        <p id="predict" class="hidden link">predict</p>
+      </section>
       <p><span id="violet" class="link">violet</span>, <span id="blue" class="link">blue</span>, <span id="green" class="link">green</span>,
         <span id="yellow" class="link">yellow</span>, <span id="orange" class="link">orange</span>, <span id="red"
           class="link">red</span> <br> <span id="pink" class="link">pink</span>, <span id="brown" class="link">brown</span>, <span id="grey" class="link">grey</span></p>

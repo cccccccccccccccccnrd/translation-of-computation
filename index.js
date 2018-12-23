@@ -7,9 +7,11 @@ const db = new Datastore({ filename: path.join(__dirname, 'dataset'), autoload: 
 const wss = new WebSocket.Server({ port: 5001 })
 const app = express()
 
+const port = 5000
 const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
 
 app.use('/', express.static(path.join(__dirname, 'public')))
+app.use('/model', express.static(path.join(__dirname, 'model')))
 
 app.use('/dataset/label/:label', (req, res) => {
   if (labels.indexOf(req.params.label) === -1) {
@@ -52,6 +54,21 @@ app.use('/dataset/client/:client', (req, res) => {
   })
 })
 
+app.use('/dataset/id/:id', (req, res) => {
+  db.find({ _id: req.params.id }, (err, entries) => {
+    if (err) console.log(err)
+
+    if (entries.length === 0) {
+      res.statusCode = 404
+      res.json({
+        errors: [`No entry with id ${ req.params.id }`]
+      })
+    } else {
+      res.json(entries)
+    }
+  })
+})
+
 app.use('/dataset', (req, res) => {
   db.find({}, (err, entries) => {
     if (err) console.log(err)
@@ -66,7 +83,7 @@ app.use('/dataset', (req, res) => {
 })
 
 app.set('json spaces', 2)
-app.listen(5000)
+app.listen(port)
 
 function validate (data) {
   if (labels.indexOf(data.label) === -1) {
@@ -106,3 +123,5 @@ wss.on('connection', (ws) => {
     }
   })
 })
+
+console.log(`toc servin at http://localhost:${ port }`)
