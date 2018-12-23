@@ -34,8 +34,8 @@ app.use('/dataset/label/:label', (req, res) => {
   })
 })
 
-app.use('/dataset/client/:client').sort({ timestamp: 1 }).exec((req, res) => {
-  db.find({ client: req.params.client }, (err, entries) => {
+app.use('/dataset/client/:client', (req, res) => {
+  db.find({ client: req.params.client }).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
 
     if (entries.length === 0) {
