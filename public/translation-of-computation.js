@@ -86,7 +86,7 @@ predict.addEventListener('click', async () => {
 
   setTimeout(() => {
     predict.innerText = 'predict'
-  }, 1000)
+  }, 3000)
 })
 
 violet.addEventListener('click', () => {
