@@ -45,6 +45,10 @@ const app = new Vue({
       this.inputs.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
     },
     sendColor: function (label) {
+      this.setColor()
+
+      if(this.inputs.invalid) return
+
       const msg = {
         data: {
           label: label,
@@ -54,31 +58,10 @@ const app = new Vue({
       }
     
       socket.send(JSON.stringify(msg))
-      this.setColor()
     },
     validation: function () {
       const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value))
 
-      if (values[0] && values[0] !== NaN) {
-        this.color.r = Number.parseInt(values[0])
-      } else {
-        this.color.r = NaN
-      }
-
-      if (values[1] && values[1] !== NaN) {
-        this.color.g = Number.parseInt(values[1])
-      } else {
-        this.color.g = NaN
-      }
-
-      if (values[2] && values[2] !== NaN) {
-        this.color.b = Number.parseInt(values[2])
-      } else {
-        this.color.b = NaN
-      }
-
-      console.log(this.color)
-      
       if (values.length !== 3) {
         this.inputs.invalid = true
         this.inputs.hide = true
