@@ -16,8 +16,9 @@ const app = new Vue({
       invalid: false,
       hide: true,
       rgb: '',
-      selectedLabelLabel: null,
-      entryInfo: null
+      selectedLabel: '',
+      entryInfo: null,
+      showDataset: false
     }
   },
   created: async function () {
@@ -125,6 +126,9 @@ const app = new Vue({
     },
     info: function (item) {
       this.ui.entryInfo = item
+    },
+    toggleDataset: function () {
+      this.ui.showDataset = !this.ui.showDataset
     }
   }
 })

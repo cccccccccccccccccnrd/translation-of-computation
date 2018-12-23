@@ -35,8 +35,11 @@
           class="link">red</span> <br> <span @click="sendColor('pink')" class="link">pink</span>, <span @click="sendColor('brown')" class="link">brown</span>, <span @click="sendColor('grey')" class="link">grey</span></p>
     </section>
     <section>
+      <p>* imprint, disclaimer, <span @click="toggleDataset" class="link">dataset</span></p>
+    </section>
+    <section v-if="ui.showDataset">
       <select @change="fetch" v-model="ui.selectedLabel">
-        <option disabled value="">select label</option>
+        <option disabled value="">select one</option>
         <option value="violet">violet</option>
         <option value="blue">blue</option>
         <option value="green">green</option>
@@ -49,7 +52,7 @@
       </select>
       <section class="flex-row-wrap">
         <li v-for="(item, index) in dataset">
-          <span class="color" @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"></span>
+          <span @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}" class="color"></span>
         </li>
       </section>
       <p class="entry-info">{{ ui.entryInfo }}</p>
