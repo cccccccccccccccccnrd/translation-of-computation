@@ -89,7 +89,6 @@ const app = new Vue({
       this.inputs.hide = true
     },
     predict: function () {
-      tf.tidy(async () => {
         const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value) / 255)
         const xs = tf.tensor2d([values])
         
@@ -98,7 +97,10 @@ const app = new Vue({
         
         const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
         this.label = labels[index[0]]
-      })
+
+        tf.dispose(xs)
+        tf.dispose(prediction)
+        tf.dispose(index)
     }
   }
 })
