@@ -67,6 +67,8 @@ const app = new Vue({
       if (values[1]) this.color.g = values[1]
       if (values[2]) this.color.b = values[2]
 
+      console.log(this.color)
+
       if (values.length !== 3) {
         this.inputs.invalid = true
         this.inputs.hide = true
