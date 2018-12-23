@@ -79,8 +79,6 @@ const app = new Vue({
       if (values[1] || values[1] === 0) this.color.g = values[1]
       if (values[2] || values[2] === 0) this.color.b = values[2]
 
-      console.log(this.color)
-
       if (values.length !== 3) {
         this.ui.invalid = true
         this.ui.hide = true

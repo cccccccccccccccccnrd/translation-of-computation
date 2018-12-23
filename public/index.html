@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -52,10 +52,10 @@
       </select>
       <section class="flex-row-wrap">
         <li v-for="(item, index) in dataset">
-          <span @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}" class="color"></span>
+          <span @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}" class="entry"></span>
         </li>
       </section>
-      <p class="entry-info">{{ ui.entryInfo }}</p>
+      <p>{{ ui.entryInfo }}</p>
     </section>
   </section>
 
