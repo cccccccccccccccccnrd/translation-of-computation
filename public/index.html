@@ -17,14 +17,6 @@
 <body class="flex">
   <section id="app" class="indent flex">
     <section>
-      <p>translation of computation</p>
-      <p>
-        I see the translation of computation as the interface between the occurring computation and the affected human
-        being. In this work transparent computation becomes an essential part of human-computer interaction. I want to
-        create a technical reflection through design processes on the insights gathered on computed spaces.
-      </p>
-    </section>
-    <section>
       <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': ui.invalid }"></div>
       <section class="flex-row predict-container">
         <input @input="validation" @focusin="validation" @focusout="hide" v-model="ui.rgb" id="rgb" type="text" name="color"/>
@@ -35,7 +27,7 @@
           class="link">red</span> <br> <span @click="sendColor('pink')" class="link">pink</span>, <span @click="sendColor('brown')" class="link">brown</span>, <span @click="sendColor('grey')" class="link">grey</span></p>
     </section>
     <section>
-      <p>* imprint, disclaimer, <span @click="toggleDataset" class="link">dataset</span></p>
+      <p>* <span @click="toggleDataset" class="link">dataset</span></p>
     </section>
     <section v-if="ui.showDataset">
       <select @change="fetch" v-model="ui.selectedLabel">
