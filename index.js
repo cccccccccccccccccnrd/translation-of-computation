@@ -22,7 +22,7 @@ app.use('/dataset/label/:label', (req, res) => {
     return
   }
 
-  db.find({ 'data.label': req.params.label }, (err, entries) => {
+  db.find({ 'data.label': req.params.label }).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
 
     if (entries.length === 0) {
@@ -34,7 +34,7 @@ app.use('/dataset/label/:label', (req, res) => {
   })
 })
 
-app.use('/dataset/client/:client', (req, res) => {
+app.use('/dataset/client/:client').sort({ timestamp: 1 }).exec((req, res) => {
   db.find({ client: req.params.client }, (err, entries) => {
     if (err) console.log(err)
 
@@ -55,7 +55,7 @@ app.use('/dataset/client/:client', (req, res) => {
 })
 
 app.use('/dataset/id/:id', (req, res) => {
-  db.find({ _id: req.params.id }, (err, entries) => {
+  db.find({ _id: req.params.id }).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
 
     if (entries.length === 0) {
@@ -70,7 +70,7 @@ app.use('/dataset/id/:id', (req, res) => {
 })
 
 app.use('/dataset', (req, res) => {
-  db.find({}, (err, entries) => {
+  db.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
 
     if (entries.length === 0) {

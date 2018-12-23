@@ -25,17 +25,34 @@
       </p>
     </section>
     <section>
-      <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': inputs.invalid }"></div>
+      <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': ui.invalid }"></div>
       <section class="flex-row predict-container">
-        <input @input="validation" @focusin="validation" @focusout="hide" v-model="inputs.rgb" id="rgb" type="text" />
-        <p id="label" :class="{ hidden: inputs.invalid, hidden: inputs.hide }">{{ label }}</p>
+        <input @input="validation" @focusin="validation" @focusout="hide" v-model="ui.rgb" id="rgb" type="text" />
+        <p id="label" :class="{ hidden: ui.invalid, hidden: ui.hide }">{{ label }}</p>
       </section>
       <p><span @click="sendColor('violet')" class="link">violet</span>, <span @click="sendColor('blue')" class="link">blue</span>, <span @click="sendColor('green')" class="link">green</span>,
         <span @click="sendColor('yellow')" class="link">yellow</span>, <span @click="sendColor('orange')" class="link">orange</span>, <span @click="sendColor('red')"
           class="link">red</span> <br> <span @click="sendColor('pink')" class="link">pink</span>, <span @click="sendColor('brown')" class="link">brown</span>, <span @click="sendColor('grey')" class="link">grey</span></p>
     </section>
     <section>
-      <p>* imprint, disclaimer</p>
+      <select @change="fetch" v-model="ui.selectedLabel">
+        <option disabled value="">select label</option>
+        <option value="violet">violet</option>
+        <option value="blue">blue</option>
+        <option value="green">green</option>
+        <option value="yellow">yellow</option>
+        <option value="orange">orange</option>
+        <option value="red">red</option>
+        <option value="pink">pink</option>
+        <option value="brown">brown</option>
+        <option value="grey">grey</option>
+      </select>
+      <section class="flex-row-wrap">
+        <li v-for="(item, index) in dataset">
+          <span class="color" @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"></span>
+        </li>
+      </section>
+      <p class="entry-info">{{ ui.entryInfo }}</p>
     </section>
   </section>
 

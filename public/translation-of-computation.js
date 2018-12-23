@@ -11,10 +11,13 @@ const app = new Vue({
       b: 0
     },
     client: Math.random().toString(16).slice(2),
-    inputs: {
+    dataset: null,
+    ui: {
       invalid: false,
       hide: true,
-      rgb: ''
+      rgb: '',
+      selectedLabelLabel: null,
+      entryInfo: null
     }
   },
   created: async function () {
@@ -27,6 +30,11 @@ const app = new Vue({
     },
     background: function () {
       return `rgb(${ this.color.r }, ${ this.color.g }, ${ this.color.b })`
+    },
+    datasetBackground: function (index) {
+      console.log(index)
+      console.log(this.dataset[0])
+      return `rgb(${ this.dataset[index].data.color.r }, ${ this.dataset[index].data.color.g }, ${ this.dataset[index].data.color.b })`
     }
   },
   methods: {
@@ -41,11 +49,11 @@ const app = new Vue({
         b: b
       }
 
-      this.inputs.invalid = false
-      this.inputs.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
+      this.ui.invalid = false
+      this.ui.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
     },
     sendColor: function (label) {
-      if (this.inputs.invalid) {
+      if (this.ui.invalid) {
         this.setColor()
         return
       }
@@ -59,9 +67,12 @@ const app = new Vue({
       }
     
       socket.send(JSON.stringify(msg))
+
+      this.setColor()
+      this.fetch()
     },
     validation: function () {
-      const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value))
+      const values = this.ui.rgb.split(',').map(value => Number.parseInt(value))
 
       if (values[0] || values[0] === 0) this.color.r = values[0]
       if (values[1] || values[1] === 0) this.color.g = values[1]
@@ -70,28 +81,28 @@ const app = new Vue({
       console.log(this.color)
 
       if (values.length !== 3) {
-        this.inputs.invalid = true
-        this.inputs.hide = true
+        this.ui.invalid = true
+        this.ui.hide = true
         return
       } else if (values.some(e => isNaN(e))) { 
-        this.inputs.invalid = true
-        this.inputs.hide = true
+        this.ui.invalid = true
+        this.ui.hide = true
         return
       } else if (values.some(e => e < 0 || e > 255)) {
-        this.inputs.invalid = true
-        this.inputs.hide = true
+        this.ui.invalid = true
+        this.ui.hide = true
         return
       } else {
-        this.inputs.invalid = false
-        this.inputs.hide = false
+        this.ui.invalid = false
+        this.ui.hide = false
         this.predict()
       }
     },
     hide: function () {
-      this.inputs.hide = true
+      this.ui.hide = true
     },
     predict: async function () {
-        const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value) / 255)
+        const values = this.ui.rgb.split(',').map(value => Number.parseInt(value) / 255)
         const xs = tf.tensor2d([values])
         
         const prediction = model.predict(xs)
@@ -101,6 +112,19 @@ const app = new Vue({
         this.label = labels[index[0]]
 
         tf.dispose(xs)
+    },
+    fetch: function () {
+      if (!this.ui.selectedLabel) return
+
+      fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
+        .then(res => res.json())
+        .then(data => {
+          this.dataset = data
+          this.ui.entryInfo = null
+        })
+    },
+    info: function (item) {
+      this.ui.entryInfo = item
     }
   }
 })
