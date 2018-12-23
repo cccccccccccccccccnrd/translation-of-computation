@@ -91,14 +91,14 @@ const app = new Vue({
     predict: async function () {
       const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value) / 255)
       const xs = tf.tensor2d([values])
-      tf.dispose(xs)
-
+      
       const prediction = model.predict(xs)
       const index = await prediction.argMax(1).data()
       
       const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
-      
       this.label = labels[index[0]]
+
+      tf.dispose(xs)
     }
   }
 })
