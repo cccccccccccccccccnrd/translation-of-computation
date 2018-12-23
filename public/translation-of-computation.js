@@ -83,9 +83,11 @@ rgb.addEventListener('input', () => {
   } else if (values.some(e => Number.isNaN(e))) { 
     sample.style.background = 'white'
     label.classList.add('hidden')
+    return
   } else if (values.some(e => e < 0 || e > 255)) {
     sample.style.background = 'white'
     label.classList.add('hidden')
+    return
   } else {
     sample.style.background = `rgb(${ values[0] }, ${ values[1] }, ${ values[2] })`
     predict()
