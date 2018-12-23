@@ -99,8 +99,6 @@ const app = new Vue({
         this.label = labels[index[0]]
 
         tf.dispose(xs)
-        tf.dispose(prediction)
-        tf.dispose(index)
     }
   }
 })
