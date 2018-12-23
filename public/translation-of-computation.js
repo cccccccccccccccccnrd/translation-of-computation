@@ -45,9 +45,10 @@ const app = new Vue({
       this.inputs.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
     },
     sendColor: function (label) {
-      this.setColor()
-
-      if(this.inputs.invalid) return
+      if (this.inputs.invalid) {
+        this.setColor()
+        return
+      }
 
       const msg = {
         data: {
