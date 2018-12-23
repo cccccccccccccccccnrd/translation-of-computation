@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -14,7 +15,7 @@
 </head>
 
 <body class="flex">
-  <section class="indent flex">
+  <section id="app" class="indent flex">
     <section>
       <p>translation of computation</p>
       <p>
@@ -24,14 +25,14 @@
       </p>
     </section>
     <section>
-      <div id="color"></div>
+      <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': inputs.invalid }"></div>
       <section class="flex-row predict-container">
-        <input id="rgb" type="text" />
-        <p id="label" class="hidden"></p>
+        <input @input="rgbInput" @focusout="rgbFocusOut" v-model="inputs.rgb" id="rgb" type="text" />
+        <p id="label" :class="{ hidden: inputs.invalid, hidden: inputs.hide }">{{ label }}</p>
       </section>
-      <p><span id="violet" class="link">violet</span>, <span id="blue" class="link">blue</span>, <span id="green" class="link">green</span>,
-        <span id="yellow" class="link">yellow</span>, <span id="orange" class="link">orange</span>, <span id="red"
-          class="link">red</span> <br> <span id="pink" class="link">pink</span>, <span id="brown" class="link">brown</span>, <span id="grey" class="link">grey</span></p>
+      <p><span @click="sendColor('violet')" class="link">violet</span>, <span @click="sendColor('blue')" class="link">blue</span>, <span @click="sendColor('green')" class="link">green</span>,
+        <span @click="sendColor('yellow')" class="link">yellow</span>, <span @click="sendColor('orange')" class="link">orange</span>, <span @click="sendColor('red')"
+          class="link">red</span> <br> <span @click="sendColor('pink')" class="link">pink</span>, <span @click="sendColor('brown')" class="link">brown</span>, <span @click="sendColor('grey')" class="link">grey</span></p>
     </section>
     <section>
       <p>* imprint, disclaimer</p>

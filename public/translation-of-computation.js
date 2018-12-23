@@ -1,138 +1,99 @@
-const sample = document.getElementById('color')
-const rgb = document.getElementById('rgb')
-const label = document.getElementById('label')
-const violet = document.getElementById('violet')
-const blue = document.getElementById('blue')
-const green = document.getElementById('green')
-const yellow = document.getElementById('yellow')
-const orange = document.getElementById('orange')
-const red = document.getElementById('red')
-const pink = document.getElementById('pink')
-const brown = document.getElementById('brown')
-const grey = document.getElementById('grey')
-
 const socket = new WebSocket('wss://cnrd.computer/toc-ws')
 
-let color
-const client = Math.random().toString(16).slice(2)
-
-async function predict () {
-  const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
-
-  const values = rgb.value.split(',').map(value => Number.parseInt(value) / 255)
-  const xs = tf.tensor2d([values])
-  
-  const prediction = model.predict(xs)
-  const index = await prediction.argMax(1).data()
-  
-  const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
-  
-  label.classList.remove('hidden')
-  label.innerText = labels[index[0]]
-}
-
-function setColor () {
-  const r = getValue()
-  const g = getValue()
-  const b = getValue()
-
-  color = {
-    r: r,
-    g: g,
-    b: b
-  }
-
-  sample.style.background = `rgb(${ r }, ${ g }, ${ b })`
-  rgb.value = `${ r }, ${ g }, ${ b }`
-}
-
-function sendColor (label) {
-  const msg = {
-    data: {
-      label: label,
-      color: color
+const app = new Vue({
+  el: '#app',
+  data: {
+    label: '',
+    color: {
+      r: 0,
+      g: 0,
+      b: 0
     },
-    client: client
+    client: Math.random().toString(16).slice(2),
+    inputs: {
+      invalid: false,
+      hide: true,
+      rgb: ''
+    }
+  },
+  created: function () {
+    this.setColor()
+  },
+  computed: {
+    rgb: function () {
+      return `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
+    },
+    background: function () {
+      return `rgb(${ this.color.r }, ${ this.color.g }, ${ this.color.b })`
+    }
+  },
+  methods: {
+    setColor: function () {
+      const r = Math.floor(Math.random() * 255)
+      const g = Math.floor(Math.random() * 255)
+      const b = Math.floor(Math.random() * 255)
+    
+      this.color = {
+        r: r,
+        g: g,
+        b: b
+      }
+
+      this.inputs.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
+    },
+    sendColor: function (label) {
+      const msg = {
+        data: {
+          label: label,
+          color: this.color
+        },
+        client: this.client
+      }
+    
+      socket.send(JSON.stringify(msg))
+      this.setColor()
+    },
+    rgbInput: function () {
+      const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value))
+
+      console.log(values)
+      if (values.length !== 3) {
+        this.inputs.invalid = true
+        this.inputs.hide = false
+        return
+      } else if (values.some(e => isNaN(e))) { 
+        this.inputs.invalid = true
+        this.inputs.hide = false
+        return
+      } else if (values.some(e => e < 0 || e > 255)) {
+        this.inputs.invalid = true
+        this.inputs.hide = false
+        return
+      } else {
+        this.inputs.invalid = false
+        this.inputs.hide = false
+        this.color.r = values[0]
+        this.color.g = values[1]
+        this.color.b = values[2]
+        
+        this.predict()
+      }
+    },
+    rgbFocusOut: function () {
+      this.inputs.hide = true
+    },
+    predict: async function () {
+      const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
+
+      const values = rgb.value.split(',').map(value => Number.parseInt(value) / 255)
+      const xs = tf.tensor2d([values])
+      
+      const prediction = model.predict(xs)
+      const index = await prediction.argMax(1).data()
+      
+      const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
+      
+      this.label = labels[index[0]]
+    }
   }
-
-  socket.send(JSON.stringify(msg))
-  setColor()
-}
-
-function getValue () {
-  return Math.floor(Math.random() * 255)
-}
-
-rgb.addEventListener('focusin', () => {
-  label.classList.remove('hidden')
 })
-
-rgb.addEventListener('focusout', () => {
-  setTimeout(() => {
-    label.classList.add('hidden')
-  }, 400)
-})
-
-rgb.addEventListener('input', () => {
-  const values = rgb.value.split(',').map(value => Number.parseInt(value))
-
-  if (values.length !== 3) {
-    sample.style.background = 'white'
-    label.classList.add('hidden')
-    return
-  } else if (values.some(e => isNaN(e))) { 
-    sample.style.background = 'white'
-    label.classList.add('hidden')
-    return
-  } else if (values.some(e => e < 0 || e > 255)) {
-    sample.style.background = 'white'
-    label.classList.add('hidden')
-    return
-  } else {
-    sample.style.background = `rgb(${ values[0] }, ${ values[1] }, ${ values[2] })`
-    predict()
-  }
-})
-
-violet.addEventListener('click', () => {
-  sendColor('violet')
-})
-
-blue.addEventListener('click', () => {
-  sendColor('blue')
-})
-
-green.addEventListener('click', () => {
-  sendColor('green')
-})
-
-yellow.addEventListener('click', () => {
-  sendColor('yellow')
-})
-
-orange.addEventListener('click', () => {
-  sendColor('orange')
-})
-
-red.addEventListener('click', () => {
-  sendColor('red')
-})
-
-pink.addEventListener('click', () => {
-  sendColor('pink')
-})
-
-brown.addEventListener('click', () => {
-  sendColor('brown')
-})
-
-grey.addEventListener('click', () => {
-  sendColor('grey')
-})
-
-/* setInterval(() => {
-  setColor()
-  sendColor('red')
-}, 30)  */
-
-setColor()
