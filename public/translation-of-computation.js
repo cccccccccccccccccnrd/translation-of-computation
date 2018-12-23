@@ -80,7 +80,7 @@ rgb.addEventListener('input', () => {
     sample.style.background = 'white'
     label.classList.add('hidden')
     return
-  } else if (values.some(e => Number.isNaN(e))) { 
+  } else if (values.some(e => isNaN(e))) { 
     sample.style.background = 'white'
     label.classList.add('hidden')
     return
