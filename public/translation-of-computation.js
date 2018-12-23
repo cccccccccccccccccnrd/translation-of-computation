@@ -88,8 +88,8 @@ const app = new Vue({
     hide: function () {
       this.inputs.hide = true
     },
-    predict: async function () {
-      tf.tidy(() => {
+    predict: function () {
+      tf.tidy(async () => {
         const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value) / 255)
         const xs = tf.tensor2d([values])
         
