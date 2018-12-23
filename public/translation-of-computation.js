@@ -11,7 +11,7 @@ const pink = document.getElementById('pink')
 const brown = document.getElementById('brown')
 const grey = document.getElementById('grey')
 
-const socket = new WebSocket('ws://cnrd.computer/toc-ws')
+const socket = new WebSocket('wss://cnrd.computer/toc-ws')
 
 let color
 const client = Math.random().toString(16).slice(2)
