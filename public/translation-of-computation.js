@@ -1,4 +1,5 @@
 const socket = new WebSocket('wss://cnrd.computer/toc-ws')
+let model
 
 const app = new Vue({
   el: '#app',
@@ -16,8 +17,9 @@ const app = new Vue({
       rgb: ''
     }
   },
-  created: function () {
+  created: async function () {
     this.setColor()
+    model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
   },
   computed: {
     rgb: function () {
@@ -39,6 +41,7 @@ const app = new Vue({
         b: b
       }
 
+      this.inputs.invalid = false
       this.inputs.rgb = `${ this.color.r }, ${ this.color.g }, ${ this.color.b }`
     },
     sendColor: function (label) {
@@ -53,39 +56,37 @@ const app = new Vue({
       socket.send(JSON.stringify(msg))
       this.setColor()
     },
-    rgbInput: function () {
+    validation: function () {
       const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value))
 
       console.log(values)
       if (values.length !== 3) {
         this.inputs.invalid = true
-        this.inputs.hide = false
+        this.inputs.hide = true
         return
       } else if (values.some(e => isNaN(e))) { 
         this.inputs.invalid = true
-        this.inputs.hide = false
+        this.inputs.hide = true
         return
       } else if (values.some(e => e < 0 || e > 255)) {
         this.inputs.invalid = true
-        this.inputs.hide = false
+        this.inputs.hide = true
         return
       } else {
         this.inputs.invalid = false
         this.inputs.hide = false
-        this.color.r = values[0]
-        this.color.g = values[1]
-        this.color.b = values[2]
+        this.color.r = Number.parseInt(values[0])
+        this.color.g = Number.parseInt(values[1])
+        this.color.b = Number.parseInt(values[2])
         
         this.predict()
       }
     },
-    rgbFocusOut: function () {
+    hide: function () {
       this.inputs.hide = true
     },
     predict: async function () {
-      const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
-
-      const values = rgb.value.split(',').map(value => Number.parseInt(value) / 255)
+      const values = this.inputs.rgb.split(',').map(value => Number.parseInt(value) / 255)
       const xs = tf.tensor2d([values])
       
       const prediction = model.predict(xs)

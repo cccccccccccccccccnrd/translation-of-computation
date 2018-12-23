@@ -27,7 +27,7 @@
     <section>
       <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': inputs.invalid }"></div>
       <section class="flex-row predict-container">
-        <input @input="rgbInput" @focusout="rgbFocusOut" v-model="inputs.rgb" id="rgb" type="text" />
+        <input @input="validation" @focusin="validation" @focusout="hide" v-model="inputs.rgb" id="rgb" type="text" />
         <p id="label" :class="{ hidden: inputs.invalid, hidden: inputs.hide }">{{ label }}</p>
       </section>
       <p><span @click="sendColor('violet')" class="link">violet</span>, <span @click="sendColor('blue')" class="link">blue</span>, <span @click="sendColor('green')" class="link">green</span>,
