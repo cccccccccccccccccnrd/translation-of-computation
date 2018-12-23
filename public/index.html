@@ -27,7 +27,7 @@
     <section>
       <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': ui.invalid }"></div>
       <section class="flex-row predict-container">
-        <input @input="validation" @focusin="validation" @focusout="hide" v-model="ui.rgb" id="rgb" type="text" />
+        <input @input="validation" @focusin="validation" @focusout="hide" v-model="ui.rgb" id="rgb" type="text" name="color"/>
         <p id="label" :class="{ hidden: ui.invalid, hidden: ui.hide }">{{ label }}</p>
       </section>
       <p><span @click="sendColor('violet')" class="link">violet</span>, <span @click="sendColor('blue')" class="link">blue</span>, <span @click="sendColor('green')" class="link">green</span>,
@@ -52,7 +52,7 @@
       </select>
       <section class="flex-row-wrap">
         <li v-for="(item, index) in dataset">
-          <span @click="info(item)" :style="{ background: 'rgba(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}" class="entry"></span>
+          <span @click="info(item)" :style="{ background: 'rgb(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}" class="entry"></span>
         </li>
       </section>
       <p>{{ ui.entryInfo }}</p>
