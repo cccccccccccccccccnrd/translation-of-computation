@@ -52,6 +52,23 @@ rgb.addEventListener('focus', () => {
   predict.classList.remove('hidden')
 })
 
+rgb.addEventListener('input', () => {
+  const values = rgb.value.split(',').map(value => Number.parseInt(value))
+
+  console.log(values)
+  if (!values.length === 3) {
+    sample.style.background = 'white'
+    return
+  } else if (values.some(e => Number.isNaN(e))) { 
+    sample.style.background = 'white'
+  } else if (values.some(e => e < 0 || e > 255)) {
+    sample.style.background = 'white'
+  } else {
+    sample.style.background = `rgb(${ values[0] }, ${ values[1] }, ${ values[2] })`
+  }
+
+})
+
 predict.addEventListener('click', async () => {
   if (predict.style.visibility === 'hidden') return
 
@@ -64,7 +81,12 @@ predict.addEventListener('click', async () => {
   const index = prediction.argMax(1).dataSync()[0]
   
   const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
-  console.log(labels[index])
+  
+  predict.innerText = labels[index]
+
+  setTimeout(() => {
+    predict.innerText = 'predict'
+  }, 1000)
 })
 
 violet.addEventListener('click', () => {
