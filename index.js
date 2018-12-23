@@ -8,7 +8,7 @@ const wss = new WebSocket.Server({ port: 5001 })
 const app = express()
 
 const port = 5000
-const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
+const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red']
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/model', express.static(path.join(__dirname, 'model')))

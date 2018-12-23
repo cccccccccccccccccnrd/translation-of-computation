@@ -107,7 +107,7 @@ const app = new Vue({
         const prediction = model.predict(xs)
         const index = await prediction.argMax(1).data()
         
-        const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
+        const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red']
         this.label = labels[index[0]]
 
         tf.dispose(xs)
