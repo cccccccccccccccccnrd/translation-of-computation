@@ -1,6 +1,6 @@
 const sample = document.getElementById('color')
 const rgb = document.getElementById('rgb')
-const predict = document.getElementById('predict')
+const label = document.getElementById('label')
 const violet = document.getElementById('violet')
 const blue = document.getElementById('blue')
 const green = document.getElementById('green')
@@ -15,6 +15,21 @@ const socket = new WebSocket('wss://cnrd.computer/toc-ws')
 
 let color
 const client = Math.random().toString(16).slice(2)
+
+async function predict () {
+  const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
+
+  const values = rgb.value.split(',').map(value => value / 255)
+  const xs = tf.tensor2d([values])
+  
+  const prediction = model.predict(xs)
+  const index = await prediction.argMax(1).data()
+  
+  const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
+  
+  label.classList.remove('hidden')
+  label.innerText = labels[index[0]]
+}
 
 function setColor () {
   const r = getValue()
@@ -48,45 +63,35 @@ function getValue () {
   return Math.floor(Math.random() * 255)
 }
 
-rgb.addEventListener('focus', () => {
-  predict.classList.remove('hidden')
+rgb.addEventListener('focusin', () => {
+  label.classList.remove('hidden')
+})
+
+rgb.addEventListener('focusout', () => {
+  setTimeout(() => {
+    label.classList.add('hidden')
+  }, 400)
 })
 
 rgb.addEventListener('input', () => {
   const values = rgb.value.split(',').map(value => Number.parseInt(value))
 
-  console.log(values)
-  if (!values.length === 3) {
+  if (values.length !== 3) {
     sample.style.background = 'white'
+    label.classList.add('hidden')
     return
   } else if (values.some(e => Number.isNaN(e))) { 
     sample.style.background = 'white'
+    label.classList.add('hidden')
   } else if (values.some(e => e < 0 || e > 255)) {
     sample.style.background = 'white'
+    label.classList.add('hidden')
   } else {
     sample.style.background = `rgb(${ values[0] }, ${ values[1] }, ${ values[2] })`
+    predict()
   }
 
-})
-
-predict.addEventListener('click', async () => {
-  if (predict.style.visibility === 'hidden') return
-
-  const model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
-
-  const values = rgb.value.split(',').map(value => value / 255)
-  const xs = tf.tensor2d([values])
-  
-  const prediction = model.predict(xs)
-  const index = prediction.argMax(1).dataSync()[0]
-  
-  const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red', 'pink', 'brown', 'grey']
-  
-  predict.innerText = labels[index]
-
-  setTimeout(() => {
-    predict.innerText = 'predict'
-  }, 3000)
+  console.log(values)
 })
 
 violet.addEventListener('click', () => {
