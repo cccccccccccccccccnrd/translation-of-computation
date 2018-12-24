@@ -6,28 +6,13 @@ let modelname
 
 async function save (model) {
   await model.save(`file://models/${ modelname }`)
+  console.log(`generated: ${ modelname }`)
 }
 
-async function train (model, xs, ys, epochs) {
-  const options = {
-    epochs: epochs,
-    validationSplit: 0.1,
-    shuffle: true
-  }
-
-  await model.fit(xs, ys, options)
-    .then(async (results) => {
-      console.log(results)
-      save(model)
-    })
-}
-
-function build (labels, colors) {
+async function train (labels, colors) {
+  const labelsTensor = tf.tensor1d(labels, 'int32')
   const xs = tf.tensor2d(colors)
-  const ys = tf.oneHot(tf.tensor1d(labels, 'int32'), 6)
-  
-  xs.print()
-  ys.print()
+  const ys = tf.oneHot(labelsTensor, 6)
 
   const model = tf.sequential()
 
@@ -53,7 +38,21 @@ function build (labels, colors) {
     optimizer: optimizer
   })
 
-  train(model, xs, ys, 100)
+  const options = {
+    epochs: 100,
+    validationSplit: 0.1,
+    shuffle: true
+  }
+
+  await model.fit(xs, ys, options)
+    .then(async (results) => {
+      console.log(`remaining tensors: ${ tf.memory().numTensors }`)
+      save(model)
+    })
+
+  tf.dispose(labelsTensor)
+  tf.dispose(xs)
+  tf.dispose(ys)
 }
 
 function prepare (data) {
@@ -62,7 +61,7 @@ function prepare (data) {
   const labels = set.map(entry => list.indexOf(entry.label))
   const colors = set.map(entry => [entry.color.r / 255, entry.color.g / 255, entry.color.b / 255])
 
-  build(labels, colors)
+  train(labels, colors)
 }
 
 function get (limit) {
@@ -78,7 +77,6 @@ function get (limit) {
 
 function go(date) {
   modelname = date
-  console.log(modelname)
   get()
 }
 

@@ -14,7 +14,7 @@ setInterval(() => {
 
     train.go(`model-${ day }-${ month }-${ year }`)
   }
-}, 60000)
+}, 60 * 1000)
 
 const db = new Datastore({ filename: path.join(__dirname, 'dataset'), autoload: true })
 const wss = new WebSocket.Server({ port: 5001 })
