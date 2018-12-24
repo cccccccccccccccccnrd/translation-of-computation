@@ -2,8 +2,10 @@ const fetch = require('node-fetch')
 const tf = require('@tensorflow/tfjs')
 require('@tensorflow/tfjs-node')
 
-async function save (path, model) {
-  await model.save(`file://${ path }`)
+let modelname
+
+async function save (model) {
+  await model.save(`file://models/${ modelname }`)
 }
 
 async function train (model, xs, ys, epochs) {
@@ -16,7 +18,7 @@ async function train (model, xs, ys, epochs) {
   await model.fit(xs, ys, options)
     .then(async (results) => {
       console.log(results)
-      save('model', model)
+      save(model)
     })
 }
 
@@ -59,11 +61,13 @@ function prepare (data) {
   const set = data.map(entry => entry.data)
   const labels = set.map(entry => list.indexOf(entry.label))
   const colors = set.map(entry => [entry.color.r / 255, entry.color.g / 255, entry.color.b / 255])
-  
+
   build(labels, colors)
 }
 
 function get (limit) {
+  limit = limit || undefined
+
   fetch('https://cnrd.computer/toc/dataset/')
   .then(res => res.json())
   .then(data => {
@@ -72,4 +76,12 @@ function get (limit) {
   })
 }
 
-get(5000)
+function go(date) {
+  modelname = date
+  console.log(modelname)
+  get()
+}
+
+module.exports = {
+  go
+}

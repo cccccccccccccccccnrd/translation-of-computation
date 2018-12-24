@@ -2,6 +2,19 @@ const path = require('path')
 const express = require('express')
 const WebSocket = require('ws')
 const Datastore = require('nedb')
+const train = require('./train')
+
+setInterval(() => {
+  const now = new Date()
+
+  if (now.getHours() === 3 && now.getMinutes() === 0) {
+    const day = now.getDate()
+    const month = now.getMonth() + 1
+    const year = now.getFullYear()
+
+    train.go(`model-${ day }-${ month }-${ year }`)
+  }
+}, 60000)
 
 const db = new Datastore({ filename: path.join(__dirname, 'dataset'), autoload: true })
 const wss = new WebSocket.Server({ port: 5001 })
@@ -11,7 +24,7 @@ const port = 5000
 const labels = ['violet', 'blue', 'green', 'yellow', 'orange', 'red']
 
 app.use('/', express.static(path.join(__dirname, 'public')))
-app.use('/model', express.static(path.join(__dirname, 'model')))
+app.use('/models', express.static(path.join(__dirname, 'models')))
 
 app.use('/dataset/label/:label', (req, res) => {
   if (labels.indexOf(req.params.label) === -1) {

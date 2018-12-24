@@ -23,7 +23,13 @@ const app = new Vue({
   },
   created: async function () {
     this.setColor()
-    model = await tf.loadModel('https://cnrd.computer/toc/model/model.json')
+
+    const now = new Date()
+    const day = now.getDate() - 1
+    const month = now.getMonth() + 1
+    const year = now.getFullYear()
+
+    model = await tf.loadModel(`https://cnrd.computer/toc/models/model-${ day }-${ month }-${ year }/model.json`)
   },
   computed: {
     rgb: function () {
