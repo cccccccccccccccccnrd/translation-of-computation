@@ -25,7 +25,9 @@ const app = new Vue({
     this.setColor()
 
     socket.addEventListener('message', message => {
-      console.log(message)
+      const msg = JSON.parse(message.data)
+
+      if (msg.do === 'update') this.update(msg.label)
     })
 
     const now = new Date()
@@ -142,12 +144,14 @@ const app = new Vue({
     update: function (label) {
       if (!this.ui.selectedLabel) return
 
-      fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
-        .then(res => res.json())
-        .then(data => {
-          this.dataset = data
-          this.ui.entryInfo = null
-        })
+      if (this.ui.selectedLabel === label) {
+        fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
+          .then(res => res.json())
+          .then(data => {
+            this.dataset = data
+          })
+      }
+
     },
   }
 })
