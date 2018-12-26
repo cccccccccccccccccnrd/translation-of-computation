@@ -82,7 +82,7 @@ const app = new Vue({
       socket.send(JSON.stringify(msg))
 
       this.setColor()
-      this.fetch()
+      this.update(label)
     },
     validation: function () {
       const values = this.ui.rgb.split(',').map(value => Number.parseInt(value))
