@@ -26,7 +26,6 @@ const app = new Vue({
 
     socket.addEventListener('message', message => {
       const msg = JSON.parse(message.data)
-
       if (msg.do === 'update') this.update(msg.label)
     })
 
@@ -145,14 +144,12 @@ const app = new Vue({
       if (!this.ui.selectedLabel) return
 
       if (this.ui.selectedLabel === label) {
-        console.log('ima update')
         fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
           .then(res => res.json())
           .then(data => {
             this.dataset = data
           })
       }
-
     },
   }
 })
