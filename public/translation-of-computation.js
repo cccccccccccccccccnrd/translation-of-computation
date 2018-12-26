@@ -145,6 +145,7 @@ const app = new Vue({
       if (!this.ui.selectedLabel) return
 
       if (this.ui.selectedLabel === label) {
+        console.log('ima update')
         fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
           .then(res => res.json())
           .then(data => {
