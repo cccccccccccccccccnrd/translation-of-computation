@@ -131,20 +131,20 @@ wss.on('connection', (ws) => {
 
     if (validate(msg.data)) {
       db.insert(entry)
+
+      wss.clients.forEach((client) => {
+        if (client !== ws && client.readyState === WebSocket.OPEN) {
+          const update = {
+            do: 'update',
+            label: msg.data.label
+          }
+  
+          client.send(JSON.stringify(update))
+        }
+      })
     } else {
       console.log(`not valid ${ msg }`)
     }
-
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        const msg = {
-          do: 'update',
-          label: msg.data.label
-        }
-
-        client.send(JSON.stringify(msg))
-      }
-    })
   })
 })
 
