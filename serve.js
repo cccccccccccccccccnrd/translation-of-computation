@@ -134,6 +134,17 @@ wss.on('connection', (ws) => {
     } else {
       console.log(`not valid ${ msg }`)
     }
+
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        const msg = {
+          do: 'update',
+          label: msg.data.label
+        }
+
+        client.send(JSON.stringify(msg))
+      }
+    })
   })
 })
 

@@ -68,14 +68,14 @@ function get (limit) {
   limit = limit || undefined
 
   fetch('https://cnrd.computer/toc/dataset/')
-  .then(res => res.json())
-  .then(data => {
-    console.log(data.length)
-    prepare(data.slice(0, limit))
-  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data.length)
+      prepare(data.slice(0, limit))
+    })
 }
 
-function go(date) {
+function go (date) {
   modelname = date
   get()
 }

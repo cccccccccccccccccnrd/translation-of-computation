@@ -24,6 +24,10 @@ const app = new Vue({
   created: async function () {
     this.setColor()
 
+    socket.addEventListener('message', message => {
+      console.log(message)
+    })
+
     const now = new Date()
     const day = now.getDate() - 1
     const month = now.getMonth() + 1
@@ -66,6 +70,7 @@ const app = new Vue({
       }
 
       const msg = {
+        do: 'insert',
         data: {
           label: label,
           color: this.color
@@ -133,6 +138,16 @@ const app = new Vue({
     },
     toggleDataset: function () {
       this.ui.showDataset = !this.ui.showDataset
-    }
+    },
+    update: function (label) {
+      if (!this.ui.selectedLabel) return
+
+      fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
+        .then(res => res.json())
+        .then(data => {
+          this.dataset = data
+          this.ui.entryInfo = null
+        })
+    },
   }
 })
