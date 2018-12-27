@@ -51,9 +51,9 @@ const app = new Vue({
   },
   methods: {
     setColor: function () {
-      const r = Math.floor(Math.random() * 255)
-      const g = Math.floor(Math.random() * 255)
-      const b = Math.floor(Math.random() * 255)
+      const r = Math.floor(Math.random() * 256)
+      const g = Math.floor(Math.random() * 256)
+      const b = Math.floor(Math.random() * 256)
     
       this.color = {
         r: r,

@@ -101,11 +101,11 @@ app.listen(port)
 function validate (data) {
   if (labels.indexOf(data.label) === -1) {
     return false
-  } else if (!Number.isInteger(data.color.r) || data.color.r <= 0 || data.color.r >= 255) {
+  } else if (!Number.isInteger(data.color.r) || data.color.r < 0 || data.color.r > 255) {
     return false
-  } else if (!Number.isInteger(data.color.g) || data.color.g <= 0 || data.color.g >= 255) {
+  } else if (!Number.isInteger(data.color.g) || data.color.g < 0 || data.color.g > 255) {
     return false
-  } else if (!Number.isInteger(data.color.b) || data.color.b <= 0 || data.color.b >= 255) {
+  } else if (!Number.isInteger(data.color.b) || data.color.b < 0 || data.color.b > 255) {
     return false
   } else {
     return true
