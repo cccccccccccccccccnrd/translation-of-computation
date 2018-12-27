@@ -109,9 +109,6 @@ const app = new Vue({
         this.predict()
       }
     },
-    hide: function () {
-      this.ui.hide = true
-    },
     predict: async function () {
         const values = this.ui.rgb.split(',').map(value => Number.parseInt(value) / 255)
         const xs = tf.tensor2d([values])
@@ -125,7 +122,7 @@ const app = new Vue({
         tf.dispose(xs)
     },
     fetch: function () {
-      if (!this.ui.selectedLabel) return
+      if (!this.ui.selectedLabel || !this.ui.showDataset) return
 
       fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
         .then(res => res.json())
@@ -134,14 +131,8 @@ const app = new Vue({
           this.ui.entryInfo = null
         })
     },
-    info: function (item) {
-      this.ui.entryInfo = item
-    },
-    toggleDataset: function () {
-      this.ui.showDataset = !this.ui.showDataset
-    },
     update: function (label) {
-      if (!this.ui.selectedLabel) return
+      if (!this.ui.selectedLabel || !this.ui.showDataset) return
 
       if (this.ui.selectedLabel === label) {
         fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
@@ -151,5 +142,14 @@ const app = new Vue({
           })
       }
     },
+    toggleDataset: function () {
+      this.ui.showDataset = !this.ui.showDataset
+    },
+    info: function (item) {
+      this.ui.entryInfo = item
+    },
+    hide: function () {
+      this.ui.hide = true
+    }
   }
 })
