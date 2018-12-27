@@ -143,7 +143,7 @@ wss.on('connection', (ws) => {
         }
       })
     } else {
-      console.log(`not valid ${ msg }`)
+      console.log(`not valid ${ JSON.stringify(msg) }`)
     }
   })
 })
