@@ -34,7 +34,7 @@ const app = new Vue({
     const month = now.getMonth() + 1
     const year = now.getFullYear()
 
-    model = await tf.loadModel(`https://cnrd.computer/toc/models/model-${ day }-${ month }-${ year }/model.json`)
+    model = await tf.loadModel(`https://cnrd.computer/toc/models/${ day }-${ month }-${ year }/model.json`)
   },
   computed: {
     rgb: function () {
