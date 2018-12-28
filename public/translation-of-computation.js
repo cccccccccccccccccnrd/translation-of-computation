@@ -79,7 +79,11 @@ const app = new Vue({
         client: this.client
       }
     
-      socket.send(JSON.stringify(msg))
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(msg))
+      } else {
+        console.log('closed?')
+      }
 
       this.setColor()
       this.update(label)
