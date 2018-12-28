@@ -30,7 +30,7 @@ input {
   font-family: 'Inconsolata', monospace;
   font-size: 1em;
   color: white;
-  background: black;
+  background: none;
   border: 0;
 }
 

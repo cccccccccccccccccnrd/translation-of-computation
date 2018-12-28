@@ -126,7 +126,7 @@ const app = new Vue({
         tf.dispose(xs)
     },
     fetch: function () {
-      if (!this.ui.selectedLabel) return
+      if (!this.ui.showDataset) return
 
       fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
         .then(res => res.json())
@@ -136,8 +136,8 @@ const app = new Vue({
         })
     },
     update: function (label) {
-      if (!this.ui.selectedLabel) return
-
+      if (!this.ui.showDataset) return
+      
       if (this.ui.selectedLabel === label) {
         fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
           .then(res => res.json())

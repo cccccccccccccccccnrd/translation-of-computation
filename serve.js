@@ -12,7 +12,7 @@ setInterval(() => {
     const month = now.getMonth() + 1
     const year = now.getFullYear()
 
-    train.go(`model-${ day }-${ month }-${ year }`)
+    train.go(`${ day }-${ month }-${ year }`)
   }
 }, 60 * 1000)
 
