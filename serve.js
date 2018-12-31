@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const express = require('express')
 const WebSocket = require('ws')
 const Datastore = require('nedb')
@@ -11,8 +12,18 @@ setInterval(() => {
     const day = now.getDate()
     const month = now.getMonth() + 1
     const year = now.getFullYear()
+    const date = `${ day }-${ month }-${ year }`
 
-    train.go(`${ day }-${ month }-${ year }`)
+    fs.readFile('dataset', (err, data) => {
+      if (err) throw err
+
+      fs.writeFile(`datasets/${ date }`, data, (err) => {
+        if (err) throw err
+        console.log(`saved ${ date } dataset`)
+      })
+    })
+
+    train.go(date)
   }
 }, 60 * 1000)
 
