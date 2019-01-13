@@ -75,6 +75,7 @@ function get (limit) {
         .then(res => res.json())
         .then(data => {
           const list = data.map(entry => entry.label)
+          console.log(dataset.length, list)
           prepare(dataset, list)
         })
     })
