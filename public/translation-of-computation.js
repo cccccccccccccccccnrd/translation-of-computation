@@ -34,7 +34,7 @@ const app = new Vue({
     socket.addEventListener('message', message => {
       const msg = JSON.parse(message.data)
 
-      if (msg.do === 'update-dataset') this.update(msg.label)
+      if (msg.do === 'update-dataset') this.updateDataset(msg.label)
       if (msg.do === 'update-labels') this.fetchLabels()
     })
 
