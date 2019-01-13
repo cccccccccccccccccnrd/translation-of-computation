@@ -5,36 +5,11 @@ const WebSocket = require('ws')
 const Datastore = require('nedb')
 const train = require('./utils/train')
 
-function testo () {
-  const now = new Date()
-
-  const day = now.getDate() - 1
-  const month = now.getMonth() + 1
-  const year = now.getFullYear()
-  const date = `${ day }-${ month }-${ year }`
-
-  fs.readFile('dataset-store', (err, data) => {
-    if (err) throw err
-
-    fs.writeFile(`datasets/${ date }`, data, (err) => {
-      if (err) throw err
-      console.log(`saved ${ date } dataset`)
-    })
-  })
-
-  fs.writeFile(`labels/${ date }.json`, JSON.stringify(labels), (err) => {
-    if (err) throw err
-    console.log(`saved ${ date } labels`)
-  })
-
-  train.init(date)
-}
-
 setInterval(() => {
   const now = new Date()
 
   if (now.getHours() === 3 && now.getMinutes() === 0) {
-    const day = now.getDate() - 1
+    const day = now.getDate()
     const month = now.getMonth() + 1
     const year = now.getFullYear()
     const date = `${ day }-${ month }-${ year }`
@@ -73,7 +48,6 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries.map(entry => entry.data.label)
-      testo()
     }
   })
 }
