@@ -8,13 +8,13 @@ const train = require('./utils/train')
 setInterval(() => {
   const now = new Date()
 
-  if (now.getHours() === 15 && now.getMinutes() === 0) {
+  if (now.getHours() === 15 && now.getMinutes() === 10) {
     const day = now.getDate() - 1
     const month = now.getMonth() + 1
     const year = now.getFullYear()
     const date = `${ day }-${ month }-${ year }`
 
-    fs.readFile('dataset', (err, data) => {
+    fs.readFile('dataset-store', (err, data) => {
       if (err) throw err
 
       fs.writeFile(`datasets/${ date }`, data, (err) => {
@@ -32,8 +32,8 @@ setInterval(() => {
   }
 }, 60 * 1000)
 
-const storeDataset = new Datastore({ filename: path.join(__dirname, 'dataset'), autoload: true })
-const storeLabels = new Datastore({ filename: path.join(__dirname, 'labels'), autoload: true })
+const storeDataset = new Datastore({ filename: path.join(__dirname, 'dataset-store'), autoload: true })
+const storeLabels = new Datastore({ filename: path.join(__dirname, 'labels-store'), autoload: true })
 const wss = new WebSocket.Server({ port: 5001 })
 const app = express()
 
