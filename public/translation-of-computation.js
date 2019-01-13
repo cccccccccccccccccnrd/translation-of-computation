@@ -22,7 +22,7 @@ const app = new Vue({
       missingLabel: '',
       entryInfo: null,
       showDataset: false,
-      showWriting: true,
+      showWriting: false,
       showAddLabel: false
     }
   },

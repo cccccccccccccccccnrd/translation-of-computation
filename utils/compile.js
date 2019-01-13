@@ -17,7 +17,7 @@ const expressions = {
 }
 
 function save (writing) {
-  fs.writeFile('cool.json', writing, (err) => {
+  fs.writeFile(path.join(__dirname, '../public/writing.json'), writing, (err) => {
     if (err) throw err
     console.log(`compiled`)
   })
@@ -68,7 +68,7 @@ function compile (writing) {
   save(JSON.stringify(writing))
 }
 
-fs.readFile(path.join(__dirname, '../public/writing.json'), 'utf8', (err, data) => {
+fs.readFile(path.join(__dirname, 'writing.json'), 'utf8', (err, data) => {
   if (err) throw err
   compile(JSON.parse(data))
 })
