@@ -27,6 +27,7 @@ function testo () {
     console.log(`saved ${ date } labels`)
   })
 
+  console.log(labels)
   train.init(date, labels)
 }
 
