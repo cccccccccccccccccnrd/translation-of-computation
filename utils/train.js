@@ -74,6 +74,7 @@ function get (limit) {
       fetch('https://cnrd.computer/toc/dataset/labels')
         .then(res => res.json())
         .then(data => {
+          console.log(data)
           const list = data.map(entry => entry.label)
           console.log(dataset.length, list)
           prepare(dataset, list)
@@ -81,9 +82,8 @@ function get (limit) {
     })
 }
 
-function init (date, labels) {
+function init (date) {
   modelname = date
-  list = labels
   get()
 }
 

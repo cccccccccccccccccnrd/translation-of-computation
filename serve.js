@@ -27,9 +27,10 @@ function testo () {
     console.log(`saved ${ date } labels`)
   })
 
-  console.log(labels)
-  train.init(date, labels)
+  train.init(date)
 }
+
+testo()
 
 setInterval(() => {
   const now = new Date()
@@ -54,7 +55,7 @@ setInterval(() => {
       console.log(`saved ${ date } labels`)
     })
 
-    train.init(date, labels)
+    train.init(date)
   }
 }, 60 * 1000)
 
@@ -74,7 +75,6 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries.map(entry => entry.data.label)
-      testo()
     }
   })
 }
