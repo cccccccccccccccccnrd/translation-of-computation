@@ -30,8 +30,6 @@ function testo () {
   train.init(date)
 }
 
-testo()
-
 setInterval(() => {
   const now = new Date()
 
@@ -75,6 +73,7 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries.map(entry => entry.data.label)
+      testo()
     }
   })
 }
