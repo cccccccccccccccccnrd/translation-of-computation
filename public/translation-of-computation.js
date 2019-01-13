@@ -200,7 +200,7 @@ const app = new Vue({
       this.ui.showWriting = !this.ui.showWriting
     },
     fetchWriting: function () {
-      fetch(`https://cnrd.computer/toc/cool.json`)
+      fetch(`https://cnrd.computer/toc/writing.json`)
         .then(res => res.json())
         .then(data => {
           this.writing = data
