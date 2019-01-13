@@ -1,0 +1,47 @@
+[{
+	"heading": "Biased algorithms",
+	"content": "&emsp; Moore’s law is coming to an end. While achieving transistor sizes of 5 nanometers, quantum tunneling occurs and slows down the process of progress by a great extend.<sup>1</sup> In 1965 Gordon Moore predicted that the number of transistors in an integrated circuit will roughly double every two years. Since then very few manufacturers dominated the market and defined the underlying architecture of computation. The ever growing progress in computational power created complex computed spaces, which are now a fundamental part of everyday life. <br> &emsp; The same way Moore’s prediction constituted the pervasiveness of software, it now reminds us that the intertwine between hardware and software and the analysis to its creators and users is more important than ever. <br> &emsp; I see the translation of computation as the interface between the occurring computation and the affected human being.<sup>2</sup> In this work transparent computation becomes an essential part of human-computer interaction. I want to create a technical reflection through design processes on the insights gathered on computed spaces.",
+	"notes": [{
+		"author": "James Bridle",
+		"title": "New Dark Age",
+		"page": 4,
+		"link": "http://www.jamesbridle.com/books"
+	}, {
+		"author": "Apprich, Chun, Cramer, Steyerl",
+		"title": "Pattern Discrimination",
+		"page": 41,
+		"link": "https://meson.press/books/pattern-discrimination/"
+	}]
+}, {
+	"heading": "Why classify colors?",
+	"content": "&emsp; The RGB color model for HTML was formally adopted as an Internet standard in HTML 3.2, though it had been in use for some time before that. Initially, the limited color depth of most video hardware led to a limited color palette of 216 RGB colors, defined by the Netscape Color Cube. With the predominance of 24-bit displays, the use of the full 16.7 million colors of the HTML RGB color code no longer poses problems for most viewers. The web-safe color palette consists of the 216 (63) combinations of red, green, and blue where each color can take one of six values (in hexadecimal): #00, #33, #66, #99, #CC or #FF (based on the 0 to 255 range for each value discussed above). These hexadecimal values = 0, 51, 102, 153, 204, 255 in decimal, which = 0%, 20%, 40%, 60%, 80%, 100% in terms of intensity. This seems fine for splitting up 216 colors into a cube of dimension 6. <br> &emsp; However, lacking gamma correction, the perceived intensity on a standard 2.5 gamma CRT / LCD is only: 0%, 2%, 10%, 28%, 57%, 100%. See the actual web safe color palette for a visual confirmation that the majority of the colors produced are very dark.[18]",
+	"notes": [{
+		"author": "James Bridle",
+		"title": "New Dark Age",
+		"page": 4,
+		"link": "http://www.jamesbridle.com/books"
+	}, {
+		"author": "Apprich, Chun, Cramer, Steyerl",
+		"title": "Pattern Discrimination",
+		"page": 41,
+		"link": "https://meson.press/books/pattern-discrimination/"
+	}]
+}, {
+	"heading": "Intelligence as rational problem solvving",
+	"content": "&emsp; The RGB color model for HTML was formally adopted as an Internet standard in HTML 3.2, though it had been in use for some time before that. Initially, the limited color depth of most video hardware led to a limited color palette of 216 RGB colors, defined by the Netscape Color Cube. With the predominance of 24-bit displays, <code class='json'>{<br>&ensp; \"data\": {<br>&ensp;&ensp; \"label\": \"violet\",<br>&ensp;&ensp; \"color\": {<br>&ensp;&ensp;&ensp; \"r\": 201,<br>&ensp;&ensp;&ensp; \"g\": 139,<br>&ensp;&ensp;&ensp; \"b\": 214<br>&ensp;&ensp;&ensp;}<br>&ensp;&ensp;},<br>&ensp; \"client\": \"d7ca0601525ba\",<br>&ensp; \"timestamp\": 1546008439124,<br>&ensp; \"_id\": \"1ROBWPmQort0K4wv\"<br>}</code> the use of the full 16.7 million colors of the HTML RGB color code no longer poses problems for most viewers. The web-safe color palette consists of the 216 (63) combinations of red, green, and blue where each color can take one of six values (in hexadecimal): #00, #33, #66, #99, #CC or #FF (based on the 0 to 255 range for each value discussed above). These hexadecimal values = 0, 51, 102, 153, 204, 255 in decimal, <code>const xs = tf.tensor2d(colors)</code>which = 0%, 20%, 40%, 60%, 80%, 100% in terms of intensity. This seems fine for splitting up 216 colors into a cube of dimension 6. However, lacking gamma correction, the perceived intensity on a standard 2.5 gamma CRT / LCD is only: 0%, 2%, 10%, 28%, 57%, 100%. See the actual web safe color palette for a visual confirmation that the majority of the colors produced are very dark.[18]",
+	"notes": [{
+		"author": "Conrad Weise",
+		"title": "Translation of computation",
+		"page": 100,
+		"link": "http://cnrd.computer"
+	}]
+}, {
+	"heading": "Intelligence as rational problem solving",
+	"content": "&emsp; The RGB color model for HTML was formally adopted as an Internet standard in HTML 3.2, though it had been in use for some time before that. Initially, the limited color depth of most video hardware led to a limited color palette of 216 RGB colors, defined by the Netscape Color Cube. With the predominance of 24-bit displays, the use of the full 16.7 million colors of the HTML RGB color code no longer poses problems for most viewers. <code>  const hidden = tf.layers.dense({ <br>&ensp; units: 16, <br>&ensp; activation: 'sigmoid', <br>&ensp; inputShape: [3] <br> })</code>The web-safe color palette consists of the 216 (63) combinations of red, green, and blue where each color can take one of six values (in hexadecimal): #00, #33, #66, #99, #CC or #FF (based on the 0 to 255 range for each value discussed above). These hexadecimal values = 0, 51, 102, 153, 204, 255 in decimal, which = 0%, 20%, 40%, 60%, 80%, 100% in terms of intensity. This seems fine for splitting up 216 colors into a cube of dimension 6. However, lacking gamma correction, the perceived intensity on a standard 2.5 gamma CRT / LCD is only: 0%, 2%, 10%, 28%, 57%, 100%. See the actual web safe color palette for a visual confirmation that the majority of the colors produced are very dark.[18]&emsp; The RGB color model for HTML was formally adopted as an Internet standard in HTML 3.2, though it had been in use for some time before that. Initially, the limited color depth of most video hardware led to a limited color palette of 216 RGB colors, defined by the Netscape Color Cube. With the predominance of 24-bit displays, the use of the full 16.7 million colors of the HTML RGB color code no longer poses problems for most viewers. <code>const r = Math.floor(Math.random() * 256)<br>const g = Math.floor(Math.random() * 256)<br>const b = Math.floor(Math.random() * 256)</code> The web-safe color palette consists of the 216 (63) combinations of red, green, and blue where each color can take one of six values (in hexadecimal): #00, #33, #66, #99, #CC or #FF (based on the 0 to 255 range for each value discussed above). These hexadecimal values = 0, 51, 102, 153, 204, 255 in decimal, which = 0%, 20%, 40%, 60%, 80%, 100% in terms of intensity. This seems fine for splitting up 216 colors into a cube of dimension 6. However, lacking gamma correction, the perceived intensity on a standard 2.5 gamma CRT / LCD is only: 0%, 2%, 10%, 28%, 57%, 100%. See the actual web safe color palette for a visual confirmation that the majority of the colors produced are very dark.[18]<code>function save (writing) {<br>&ensp; fs.writeFile('cool.json', writing, (err) => {<br>&ensp; &ensp; if (err) throw err<br>&ensp; &ensp; console.log(`compiled`)<br>&ensp; })<br> }</code>",
+	"notes": [{
+		"author": "Conrad Weise",
+		"title": "Translation of computation",
+		"page": 100,
+		"link": "http://cnrd.computer"
+	}]
+}]

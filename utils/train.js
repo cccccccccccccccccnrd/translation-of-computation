@@ -12,7 +12,7 @@ async function save (model) {
 async function train (labels, colors) {
   const labelsTensor = tf.tensor1d(labels, 'int32')
   const xs = tf.tensor2d(colors)
-  const ys = tf.oneHot(labelsTensor, 6)
+  const ys = tf.oneHot(labelsTensor, labels.length)
 
   const model = tf.sequential()
 
@@ -23,7 +23,7 @@ async function train (labels, colors) {
   })
 
   const output = tf.layers.dense({
-    units: 6,
+    units: labels.length,
     activation: 'softmax'
   })
 
@@ -55,9 +55,8 @@ async function train (labels, colors) {
   tf.dispose(ys)
 }
 
-function prepare (data) {
-  const list = ['violet', 'blue', 'green', 'yellow', 'orange', 'red']
-  const set = data.map(entry => entry.data)
+function prepare (dataset, list) {
+  const set = dataset.map(entry => entry.data)
   const labels = set.map(entry => list.indexOf(entry.label))
   const colors = set.map(entry => [entry.color.r / 255, entry.color.g / 255, entry.color.b / 255])
 
@@ -70,16 +69,23 @@ function get (limit) {
   fetch('https://cnrd.computer/toc/dataset/')
     .then(res => res.json())
     .then(data => {
-      console.log(data.length)
-      prepare(data.slice(0, limit))
+      const dataset = data.slice(0, limit)
+
+      fetch('https://cnrd.computer/toc/dataset/labels')
+        .then(res => res.json())
+        .then(data => {
+          const list = data.map(entry => entry.label)
+          prepare(dataset, list)
+        })
     })
 }
 
-function go (date) {
+function init (date, labels) {
   modelname = date
+  list = labels
   get()
 }
 
 module.exports = {
-  go
+  init
 }
