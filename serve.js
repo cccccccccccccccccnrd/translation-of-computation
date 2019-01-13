@@ -8,7 +8,7 @@ const train = require('./utils/train')
 setInterval(() => {
   const now = new Date()
 
-  if (now.getHours() === 15 && now.getMinutes() === 10) {
+  if (now.getHours() === 15 && now.getMinutes() === 22) {
     const day = now.getDate() - 1
     const month = now.getMonth() + 1
     const year = now.getFullYear()
