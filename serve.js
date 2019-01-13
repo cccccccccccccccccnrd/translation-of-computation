@@ -27,7 +27,7 @@ function testo () {
     console.log(`saved ${ date } labels`)
   })
 
-  train.init(date)
+  train.init(date, labels)
 }
 
 setInterval(() => {
@@ -53,7 +53,7 @@ setInterval(() => {
       console.log(`saved ${ date } labels`)
     })
 
-    train.init(date)
+    train.init(date, labels)
   }
 }, 60 * 1000)
 
