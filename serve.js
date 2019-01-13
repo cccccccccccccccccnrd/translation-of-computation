@@ -56,6 +56,7 @@ setLabels()
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/models', express.static(path.join(__dirname, 'models')))
+app.use('/labels', express.static(path.join(__dirname, 'labels')))
 
 app.use('/dataset/labels', (req, res) => {
   storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
