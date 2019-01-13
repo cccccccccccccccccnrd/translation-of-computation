@@ -8,7 +8,7 @@ const train = require('./utils/train')
 setInterval(() => {
   const now = new Date()
 
-  if (now.getHours() === 15 && now.getMinutes() === 25) {
+  if (now.getHours() === 15 && now.getMinutes() === 30) {
     const day = now.getDate() - 1
     const month = now.getMonth() + 1
     const year = now.getFullYear()
@@ -23,7 +23,7 @@ setInterval(() => {
       })
     })
 
-    fs.writeFile(`labels/${ date }.json`, labels, (err) => {
+    fs.writeFile(`labels/${ date }.json`, JSON.stringify(labels), (err) => {
       if (err) throw err
       console.log(`saved ${ date } labels`)
     })
