@@ -5,10 +5,39 @@ const WebSocket = require('ws')
 const Datastore = require('nedb')
 const train = require('./utils/train')
 
-setInterval(() => {
+function testo () {
   const now = new Date()
 
   if (now.getHours() === 15 && now.getMinutes() === 30) {
+    const day = now.getDate() - 1
+    const month = now.getMonth() + 1
+    const year = now.getFullYear()
+    const date = `${ day }-${ month }-${ year }`
+
+    fs.readFile('dataset-store', (err, data) => {
+      if (err) throw err
+
+      fs.writeFile(`datasets/${ date }`, data, (err) => {
+        if (err) throw err
+        console.log(`saved ${ date } dataset`)
+      })
+    })
+
+    fs.writeFile(`labels/${ date }.json`, JSON.stringify(labels), (err) => {
+      if (err) throw err
+      console.log(`saved ${ date } labels`)
+    })
+
+    train.init(date)
+  }
+}
+
+testo()
+
+setInterval(() => {
+  const now = new Date()
+
+  if (now.getHours() === 3 && now.getMinutes() === 0) {
     const day = now.getDate() - 1
     const month = now.getMonth() + 1
     const year = now.getFullYear()
