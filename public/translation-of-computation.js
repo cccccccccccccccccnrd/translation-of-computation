@@ -200,14 +200,14 @@ const app = new Vue({
       this.ui.showWriting = !this.ui.showWriting
     },
     fetchWriting: function () {
-      fetch(`http://localhost:4000/cool.json`)
+      fetch(`https://cnrd.computer/toc/cool.json`)
         .then(res => res.json())
         .then(data => {
           this.writing = data
         })
     },
     fetchLabels: function () {
-      fetch(`http://localhost:4000/dataset/labels`)
+      fetch(`https://cnrd.computer/toc/dataset/labels`)
         .then(res => res.json())
         .then(data => {
           this.labels = data.map(entry => entry.data.label)

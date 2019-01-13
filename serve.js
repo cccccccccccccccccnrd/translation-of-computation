@@ -23,7 +23,7 @@ setInterval(() => {
       })
     })
 
-    fs.writeFile(`labels/${ date }`, labels, (err) => {
+    fs.writeFile(`labels/${ date }.json`, labels, (err) => {
       if (err) throw err
       console.log(`saved ${ date } labels`)
     })
