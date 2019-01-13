@@ -92,7 +92,7 @@ const app = new Vue({
       if (socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(msg))
       } else {
-        console.log('closed?')
+        throw 'closed?'
       }
 
       this.setColor()
