@@ -14,18 +14,7 @@
 	}]
 }, {
 	"heading": "Objectivity (of math)",
-	"content": "&emsp; A big misunderstanding which occurs in the conversation about computation and which is a general thought by the general public is that computation has a privileged status of objectivity. Just like how philosophers and other academic fields humanism? conclude since a long time, objectivity doesn't really exist in the environment of human perception. From now on when objectivity is mentioned it is meant to play in these boundaries taken in consideration the non-objectivity of our world.<br>&emsp; It is important to remind ourselves again that computation is not objective. The argument is that software is based on the rational mathematics of computation. While mathematical expressions in themselves are objective, often the inputs used to calculate a specific problem, are generated and chosen by humans. <code>const r = Math.floor(Math.random() * 256)<br> const g = Math.floor(Math.random() * 256)<br> const b = Math.floor(Math.random() * 256)</code> Properties and objects are the two essential ways to describe a situation in formal computer code. Important is here that the objects and properties themselves can be objective. But interpolation or extrapolation are subjective, political actions.",
-	"notes": [{
-		"author": "Matthew Rosenberg, Nicholas Confessore and Carole Cadwalladr",
-		"title": "How Trump Consultants Exploited the Facebook Data of Millions",
-		"page": 0,
-		"link": "https://www.nytimes.com/2018/03/17/us/politics/cambridge-analytica-trump-campaign.html"
-	}, {
-		"author": "Qualcomm",
-		"title": "Snapdragon 835",
-		"page": 0,
-		"link": "https://www.qualcomm.com/products/snapdragon-835-mobile-platform"
-	}]
+	"content": "&emsp; A big misunderstanding which occurs in the conversation about computation and which is a general thought by the general public is that computation has a privileged status of objectivity. Just like how philosophers and other academic fields humanism? conclude since a long time, objectivity doesn't really exist in the environment of human perception. From now on when objectivity is mentioned it is meant to play in these boundaries taken in consideration the non-objectivity of our world.<br>&emsp; It is important to remind ourselves again that computation is not objective. The argument is that software is based on the rational mathematics of computation. While mathematical expressions in themselves are objective, often the inputs used to calculate a specific problem, are generated and chosen by humans. <code>const r = Math.floor(Math.random() * 256)<br> const g = Math.floor(Math.random() * 256)<br> const b = Math.floor(Math.random() * 256)</code> Properties and objects are the two essential ways to describe a situation in formal computer code. Important is here that the objects and properties themselves can be objective. But interpolation or extrapolation are subjective, political actions."
 }, {
 	"heading": "Hermeneutics",
 	"content": "&emsp; \"Hermeneutics\" introduced the concept of Gadamer's hermeneutic circle, arguing what we understand is directly linked to what we already know and what we already know derives from what we are able to understand.",
