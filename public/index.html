@@ -16,6 +16,13 @@
 
 <body class="flex">
   <section id="app" class="indent flex" :class="{ 'indent-wide': ui.showWriting }">
+    <section class="information">
+        <p v-if="count < amount">client-id will be displayed in {{ amount - count }} classifications.</p>
+        <p v-if="count >= amount">client-id: {{ client }} <br> Thank you very much.</p>
+    </section>
+    <section class="introduction">
+      <p>This project classifies colors. Please assign the current color of the box with the provided labels down below. <br><br> If you think a label is missing, feel free to add it.</p>
+    </section>
     <section class="color-container">
       <div id="sample" ref="sample" :style="{ background: background }" :class="{ 'white-bg': ui.invalid }"></div>
       <section class="flex-row predict-container">
@@ -25,13 +32,13 @@
       <section>
         <p id="labels">
           <span v-for="(label, index) in labels" :key="label">
-            <span @click="sendColor(label)" class="link">{{ label }}</span>&nbsp;
+            <span @click="sendColor(label)" class="link button">{{ label }}</span>
           </span>
         </p>
         <section>
           <input @input="validationMissingLabel" @focusin="validationMissingLabel" @focusout="hideMissingLabel" v-model="ui.missingLabel"
-            class="input-text" type="text" name="missing-label" />
-          <span @click="sendMissingLabel" v-if="ui.showAddLabel" class="link">add label</span>
+            class="input-text" type="text" name="missing-label" placeholder="missing color?"/>
+          <span @click="sendMissingLabel" :class="{ disabled: !ui.showAddLabel }" class="link button">add label</span>
         </section>
       </section>
     </section>

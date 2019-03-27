@@ -1,7 +1,7 @@
 let model, labels
 
-const BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://cnrd.computer/toc'
-const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://cnrd.computer/toc-ws'
+const BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://translation-of-computation.com'
+const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://translation-of-computation.com/ws'
 const socket = new WebSocket(WS_URL)
 
 const app = new Vue({
@@ -28,7 +28,10 @@ const app = new Vue({
       showDataset: false,
       showWriting: false,
       showAddLabel: false
-    }
+    },
+    prediction: false,
+    amount: 50,
+    count: 0
   },
   created: async function () {
     this.setColor()
@@ -44,18 +47,20 @@ const app = new Vue({
       if (msg.do === 'update-labels') this.fetchLabels()
     })
 
-    fetch(`${ BASE_URL }/model?group=${ this.group }&time=latest`)
+    if (this.prediction) {
+      fetch(`${ BASE_URL }/model?group=${ this.group }&time=latest`)
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        model = await tf.loadModel(`${ BASE_URL }/archive/model.json`)
+      .then(async (data) => {
+        const timestamp = data.timestamp
+        model = await tf.loadModel(`${ BASE_URL }/archive/models/${ this.group }/${ timestamp }/model.json`)
+
+        fetch(`${ BASE_URL }/labels?group=${ this.group }`)
+        .then(res => res.json())
+        .then(data => {
+          labels = data.filter(entry => entry.timestamp <= timestamp).map(entry => entry.data.label)
+        })
       })
-    
-    fetch(`${ BASE_URL }/labels?group=${ this.group }`)
-      .then(res => res.json())
-      .then(data => {
-        labels = data
-      })
+    }
   },
   computed: {
     rgb: function () {
@@ -102,6 +107,7 @@ const app = new Vue({
         throw 'closed?'
       }
 
+      this.count++
       this.setColor()
       this.updateDataset(label)
     },
@@ -142,7 +148,7 @@ const app = new Vue({
       } else {
         this.ui.invalid = false
         this.ui.hide = false
-        this.predict()
+        if (this.prediction) this.predict()
       }
     },
     validationMissingLabel: function () {

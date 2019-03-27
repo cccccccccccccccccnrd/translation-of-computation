@@ -5,22 +5,20 @@ const WebSocket = require('ws')
 const Datastore = require('nedb')
 const train = require('./utils/train')
 
-const pls = true
-
 async function archive() {
   const timestamp = Date.now()
 
   fs.readFile('store-dataset', (err, data) => {
-    if (err) throw err
+    if (err) console.log(err)
   
     fs.writeFile(`archive/datasets/${ timestamp }`, data, (err) => {
-      if (err) throw err
+      if (err) console.log(err)
       console.log(`saved ${ timestamp } dataset`)
     })
   })
   
   fs.writeFile(`archive/labels/${ timestamp }`, JSON.stringify(labels), (err) => {
-    if (err) throw err
+    if (err) console.log(err)
     console.log(`saved ${ timestamp } labels`)
   })
   
@@ -48,7 +46,6 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries
-      if (pls) archive()
     }
   })
 }
@@ -109,12 +106,22 @@ app.use('/model', (req, res) => {
   const group = req.query.group
   const time = req.query.time
 
-  if (entries.length === 0) {
+  const groups = [...new Set(labels.map(entry => entry.group))]
+
+  if (groups.indexOf(group) === -1 || time != 'latest') {
     res.statusCode = 404
     res.json({ errors: [`No model entries`] })
-  } else {
-    res.json(entries)
+    return
   }
+
+  fs.readdir(`archive/models/${ group }`, (err, files) => {
+    if (err) return console.log(err)
+
+    const timestamps = files.map(file => Number(file)).filter(file => !isNaN(file))
+    const latest = Math.max.apply(Math, timestamps)
+
+    res.json({ timestamp: latest })
+  })
 })
 
 app.set('json spaces', 2)
