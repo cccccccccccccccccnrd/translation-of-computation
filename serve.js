@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const express = require('express')
+const cors = require('cors')
 const WebSocket = require('ws')
 const Datastore = require('nedb')
 const train = require('./utils/train')
@@ -34,6 +35,8 @@ const storeDataset = new Datastore({ filename: path.join(__dirname, 'store-datas
 const storeLabels = new Datastore({ filename: path.join(__dirname, 'store-labels'), autoload: true })
 const wss = new WebSocket.Server({ port: 5001 })
 const app = express()
+
+app.use(cors())
 
 const port = 5000
 let labels = []

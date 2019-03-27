@@ -1,0 +1,32 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Inconsolata', monospace;
+  font-size: 15px;
+}
+
+#app {
+  max-width: 400px;
+  margin: 2em;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0.25em 0;
+  padding: 0.5em;
+  font-family: 'Inconsolata', monospace;
+  font-size: 1em;
+}
+
+button {
+  width: 100%;
+}

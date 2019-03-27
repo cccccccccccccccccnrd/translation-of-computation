@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Check</title>
+</head>
+<body>
+  <section id="app">
+    <section>
+      <input v-model="ui.group" type="text" name="group" placeholder="group">
+      <input v-model="ui.clientId" type="text" name="client-id" placeholder="client-id">
+      <button @click="get()">Get</button>
+    </section>
+    <section>
+      <li v-for="(item, index) in dataset" :key="item._id">
+        <span @click="info(item)" :style="{ background: 'rgb(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"
+          class="entry"></span>
+      </li>
+    </section>
+  </section>
+  <script src="check.js"></script>
+</body>
+</html>

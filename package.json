@@ -12,6 +12,7 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.14.1",
     "@tensorflow/tfjs-node": "^0.2.1",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "nedb": "^1.8.0",
     "node-fetch": "^2.3.0",
