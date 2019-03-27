@@ -8,16 +8,16 @@ const train = require('./utils/train')
 async function archive() {
   const timestamp = Date.now()
 
-  fs.readFile('store-dataset', (err, data) => {
+  fs.readFile(path.join(__dirname, 'store-dataset'), (err, data) => {
     if (err) console.log(err)
   
-    fs.writeFile(`archive/datasets/${ timestamp }`, data, (err) => {
+    fs.writeFile(path.join(__dirname, `archive/datasets/${ timestamp }`), data, (err) => {
       if (err) console.log(err)
       console.log(`saved ${ timestamp } dataset`)
     })
   })
   
-  fs.writeFile(`archive/labels/${ timestamp }`, JSON.stringify(labels), (err) => {
+  fs.writeFile(path.join(__dirname, `archive/labels/${ timestamp }`), JSON.stringify(labels), (err) => {
     if (err) console.log(err)
     console.log(`saved ${ timestamp } labels`)
   })
@@ -46,6 +46,7 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries
+      archive()
     }
   })
 }
