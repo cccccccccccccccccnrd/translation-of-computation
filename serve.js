@@ -46,7 +46,7 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries
-      archive()
+      /* archive() */
     }
   })
 }
