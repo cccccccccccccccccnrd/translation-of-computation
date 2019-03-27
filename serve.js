@@ -5,35 +5,35 @@ const WebSocket = require('ws')
 const Datastore = require('nedb')
 const train = require('./utils/train')
 
-setInterval(() => {
-  const now = new Date()
+const pls = true
 
-  if (now.getHours() === 3 && now.getMinutes() === 0) {
-    const day = now.getDate()
-    const month = now.getMonth() + 1
-    const year = now.getFullYear()
-    const date = `${ day }-${ month }-${ year }`
+async function archive() {
+  const timestamp = Date.now()
 
-    fs.readFile('dataset-store', (err, data) => {
+  fs.readFile('store-dataset', (err, data) => {
+    if (err) throw err
+  
+    fs.writeFile(`archive/datasets/${ timestamp }`, data, (err) => {
       if (err) throw err
-
-      fs.writeFile(`datasets/${ date }`, data, (err) => {
-        if (err) throw err
-        console.log(`saved ${ date } dataset`)
-      })
+      console.log(`saved ${ timestamp } dataset`)
     })
+  })
+  
+  fs.writeFile(`archive/labels/${ timestamp }`, JSON.stringify(labels), (err) => {
+    if (err) throw err
+    console.log(`saved ${ timestamp } labels`)
+  })
+  
+  const groups = [...new Set(labels.map(entry => entry.group))]
 
-    fs.writeFile(`labels/${ date }.json`, JSON.stringify(labels), (err) => {
-      if (err) throw err
-      console.log(`saved ${ date } labels`)
-    })
-
-    train.init(date)
+  for (const group of groups) {
+    const trained = await train.init(group, timestamp)
+    console.log(trained)
   }
-}, 60 * 1000)
+}
 
-const storeDataset = new Datastore({ filename: path.join(__dirname, 'dataset-store'), autoload: true })
-const storeLabels = new Datastore({ filename: path.join(__dirname, 'labels-store'), autoload: true })
+const storeDataset = new Datastore({ filename: path.join(__dirname, 'store-dataset'), autoload: true })
+const storeLabels = new Datastore({ filename: path.join(__dirname, 'store-labels'), autoload: true })
 const wss = new WebSocket.Server({ port: 5001 })
 const app = express()
 
@@ -47,88 +47,32 @@ function setLabels() {
     if (entries.length === 0) {
       console.log('No labels entries')
     } else {
-      labels = entries.map(entry => entry.data.label)
+      labels = entries
+      if (pls) archive()
     }
   })
 }
 
 setLabels()
 
-app.use('/', express.static(path.join(__dirname, 'public')))
-app.use('/models', express.static(path.join(__dirname, 'models')))
-app.use('/labels', express.static(path.join(__dirname, 'labels')))
+app.use('/turk', express.static(path.join(__dirname, 'public')))
+app.use('/kisd', express.static(path.join(__dirname, 'public')))
 
-app.use('/dataset/labels', (req, res) => {
-  storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
-    if (err) console.log(err)
-
-    if (entries.length === 0) {
-      res.statusCode = 404
-      res.json({ errors: [`No ${ req.params.label } entries`] })
-    } else {
-      res.json(entries)
-    }
-  })
-})
-
-app.use('/dataset/label/:label', (req, res) => {
-  if (labels.indexOf(req.params.label) === -1) {
-    res.json({
-      errors: ['Invalid label'],
-      labels: labels
-    })
-    return
-  }
-
-  storeDataset.find({ 'data.label': req.params.label }).sort({ timestamp: 1 }).exec((err, entries) => {
-    if (err) console.log(err)
-
-    if (entries.length === 0) {
-      res.statusCode = 404
-      res.json({ errors: [`No ${ req.params.label } entries`] })
-    } else {
-      res.json(entries)
-    }
-  })
-})
-
-app.use('/dataset/client/:client', (req, res) => {
-  storeDataset.find({ client: req.params.client }).sort({ timestamp: 1 }).exec((err, entries) => {
-    if (err) console.log(err)
-
-    if (entries.length === 0) {
-      storeDataset.find({}, (err, entries) => {
-        const clients = [...new Set(entries.map(entry => entry.client))]
-        
-        res.statusCode = 404
-        res.json({
-          errors: [`No entries from ${ req.params.client }`],
-          clients: clients
-        })
-      })
-    } else {
-      res.json(entries)
-    }
-  })
-})
-
-app.use('/dataset/id/:id', (req, res) => {
-  storeDataset.find({ _id: req.params.id }).sort({ timestamp: 1 }).exec((err, entries) => {
-    if (err) console.log(err)
-
-    if (entries.length === 0) {
-      res.statusCode = 404
-      res.json({
-        errors: [`No entry with id ${ req.params.id }`]
-      })
-    } else {
-      res.json(entries)
-    }
-  })
-})
+/* app.use('/', express.static(path.join(__dirname, 'public'))) */
+app.use('/archive', express.static(path.join(__dirname, 'archive')))
 
 app.use('/dataset', (req, res) => {
-  storeDataset.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
+  const group = req.query.group
+  const label = req.query.label
+  const client = req.query.client
+
+  let search = {}
+
+  if (group) search['group'] = group
+  if (label) search['data.label'] = label
+  if (client) search['client'] = client
+
+  storeDataset.find(search).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
 
     if (entries.length === 0) {
@@ -140,11 +84,46 @@ app.use('/dataset', (req, res) => {
   })
 })
 
+app.use('/labels', (req, res) => {
+  const group = req.query.group
+  const client = req.query.client
+
+  let search = {}
+
+  if (group) search['group'] = group
+  if (client) search['client'] = client
+
+  storeLabels.find(search).sort({ timestamp: 1 }).exec((err, entries) => {
+    if (err) console.log(err)
+
+    if (entries.length === 0) {
+      res.statusCode = 404
+      res.json({ errors: [`No labels entries`] })
+    } else {
+      res.json(entries)
+    }
+  })
+})
+
+app.use('/model', (req, res) => {
+  const group = req.query.group
+  const time = req.query.time
+
+  if (entries.length === 0) {
+    res.statusCode = 404
+    res.json({ errors: [`No model entries`] })
+  } else {
+    res.json(entries)
+  }
+})
+
 app.set('json spaces', 2)
 app.listen(port)
 
-function validateLabel (data) {
-  if (labels.indexOf(data.label) !== -1) {
+function validateLabel (group, data) {
+  const labelsGroup = labels.filter(entry => entry.group === group).map(entry => entry.data.label)
+
+  if (labelsGroup.indexOf(data.label) !== -1) {
     return false
   } else if (/\d/.test(data.label)) {
     return false
@@ -153,8 +132,10 @@ function validateLabel (data) {
   }
 }
 
-function validateColor (data) {
-  if (labels.indexOf(data.label) === -1) {
+function validateColor (group, data) {
+  const labelsGroup = labels.filter(entry => entry.group === group).map(entry => entry.data.label)
+
+  if (labelsGroup.indexOf(data.label) === -1) {
     return false
   } else if (!Number.isInteger(data.color.r) || data.color.r < 0 || data.color.r > 255) {
     return false
@@ -172,7 +153,7 @@ wss.on('connection', (ws) => {
     try {
       JSON.parse(message)
     } catch (err) {
-      console.error(err)
+      console.log(err)
       return
     }
 
@@ -180,17 +161,19 @@ wss.on('connection', (ws) => {
   
     const entry = {
       data: msg.data,
+      group: msg.group,
       client: msg.client,
       timestamp: Date.now(),
     }
 
     if (msg.do === 'insert-color') {
-      if (validateColor(msg.data)) {
+      if (validateColor(msg.group, msg.data)) {
         storeDataset.insert(entry)
   
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             const update = {
+              group: msg.group,
               do: 'update-dataset',
               label: msg.data.label
             }
@@ -202,7 +185,7 @@ wss.on('connection', (ws) => {
         console.log(`no valid color ${ JSON.stringify(msg) }`)
       }
     } else if (msg.do === 'insert-label') {
-      if (validateLabel(msg.data)) {
+      if (validateLabel(msg.group, msg.data)) {
         storeLabels.insert(entry, (err, entry) => {
           if (err) console.log(err)
           setLabels()
@@ -211,9 +194,10 @@ wss.on('connection', (ws) => {
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             const update = {
+              group: msg.group,
               do: 'update-labels'
             }
-    
+
             client.send(JSON.stringify(update))
           }
         })

@@ -4,7 +4,8 @@
   "description": "",
   "main": "translation-of-computation.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node serve",
+    "dev": "nodemon serve"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "nedb": "^1.8.0",
     "node-fetch": "^2.3.0",
     "ws": "^6.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }

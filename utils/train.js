@@ -2,14 +2,14 @@ const fetch = require('node-fetch')
 const tf = require('@tensorflow/tfjs')
 require('@tensorflow/tfjs-node')
 
-let modelname
+const BASE_URL = 'http://localhost:5000'
 
-async function save (model) {
-  await model.save(`file://models/${ modelname }`)
-  console.log(`generated: ${ modelname }`)
+async function save (model, group, timestamp) {
+  await model.save(`file://archive/models/${ group }/${ timestamp }`)
+  return `${ group }, ${ timestamp }`
 }
 
-async function train (labels, colors) {
+async function train ([labels, colors]) {
   const labelsTensor = tf.tensor1d(labels, 'int32')
   const xs = tf.tensor2d(colors)
   const ys = tf.oneHot(labelsTensor, labels.length)
@@ -45,45 +45,49 @@ async function train (labels, colors) {
   }
 
   await model.fit(xs, ys, options)
-    .then(async (results) => {
+    .then(results => {
       console.log(`remaining tensors: ${ tf.memory().numTensors }`)
-      save(model)
     })
 
   tf.dispose(labelsTensor)
   tf.dispose(xs)
   tf.dispose(ys)
+
+  return model
 }
 
-function prepare (dataset, list) {
+function prepare ([dataset, list]) {
   const set = dataset.map(entry => entry.data)
   const labels = set.map(entry => list.indexOf(entry.label))
   const colors = set.map(entry => [entry.color.r / 255, entry.color.g / 255, entry.color.b / 255])
 
-  train(labels, colors)
+  return [labels, colors]
 }
 
-function get (limit) {
+async function get (group, limit) {
   limit = limit || undefined
 
-  fetch('https://cnrd.computer/toc/dataset/')
+  const dataset = await fetch(`${ BASE_URL }/dataset?group=${ group }`)
     .then(res => res.json())
     .then(data => {
-      const dataset = data.slice(0, limit)
-
-      fetch('https://cnrd.computer/toc/dataset/labels')
-        .then(res => res.json())
-        .then(data => {
-          const list = data.map(entry => entry.data.label)
-          console.log(dataset.length, list)
-          prepare(dataset, list)
-        })
+      return data.slice(0, limit)
     })
+  
+  const list = await fetch(`${ BASE_URL }/labels?group=${ group }`)
+    .then(res => res.json())
+    .then(data => {
+      return data.map(entry => entry.data.label)
+    })
+
+  return [dataset, list]
 }
 
-function init (date) {
-  modelname = date
-  get()
+async function init (group, timestamp) {
+  const got = await get(group)
+  const prepared = await prepare(got)
+  const trained = await train(prepared)
+  const saved = await save(trained, group, timestamp)
+  return saved
 }
 
 module.exports = {

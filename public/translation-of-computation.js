@@ -1,5 +1,8 @@
-const socket = new WebSocket('wss://cnrd.computer/toc-ws')
 let model, labels
+
+const BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://cnrd.computer/toc'
+const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://cnrd.computer/toc-ws'
+const socket = new WebSocket(WS_URL)
 
 const app = new Vue({
   el: '#app',
@@ -11,6 +14,7 @@ const app = new Vue({
       b: 0
     },
     client: Math.random().toString(16).slice(2),
+    group: window.location.pathname.replace(/\//g, ''),
     dataset: null,
     labels: null,
     writing: null,
@@ -29,23 +33,25 @@ const app = new Vue({
   created: async function () {
     this.setColor()
     this.fetchLabels()
-    this.fetchWriting()
+    /* this.fetchWriting() */
 
     socket.addEventListener('message', message => {
       const msg = JSON.parse(message.data)
+
+      if (msg.group != this.group) return
 
       if (msg.do === 'update-dataset') this.updateDataset(msg.label)
       if (msg.do === 'update-labels') this.fetchLabels()
     })
 
-    const now = new Date()
-    const day = now.getDate() - 1
-    const month = now.getMonth() + 1
-    const year = now.getFullYear()
-
-    model = await tf.loadModel(`https://cnrd.computer/toc/models/${ day }-${ month }-${ year }/model.json`)
+    fetch(`${ BASE_URL }/model?group=${ this.group }&time=latest`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        model = await tf.loadModel(`${ BASE_URL }/archive/model.json`)
+      })
     
-    fetch(`https://cnrd.computer/toc/labels/${ day }-${ month }-${ year }.json`)
+    fetch(`${ BASE_URL }/labels?group=${ this.group }`)
       .then(res => res.json())
       .then(data => {
         labels = data
@@ -86,6 +92,7 @@ const app = new Vue({
           label: label,
           color: this.color
         },
+        group: this.group,
         client: this.client
       }
     
@@ -104,6 +111,7 @@ const app = new Vue({
         data: {
           label: this.ui.missingLabel,
         },
+        group: this.group,
         client: this.client
       }
 
@@ -138,9 +146,11 @@ const app = new Vue({
       }
     },
     validationMissingLabel: function () {
-      if (this.labels.indexOf(this.ui.missingLabel) !== -1) {
+      if (this.ui.missingLabel === '') {
         this.ui.showAddLabel = false
-      } else if (/\d/.test(this.ui.missingLabel)) {
+      } else if (this.labels.indexOf(this.ui.missingLabel) !== -1) {
+        this.ui.showAddLabel = false
+      } else if (/\d/.test(this.ui.missingLabel) || /(?!-)\W/.test(this.ui.missingLabel) || /\W$/.test(this.ui.missingLabel)) {
         this.ui.showAddLabel = false
       } else {
         this.ui.showAddLabel = true
@@ -163,7 +173,7 @@ const app = new Vue({
     fetchDataset: function () {
       if (!this.ui.showDataset) return
 
-      fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
+      fetch(`${ BASE_URL }/dataset?group=${ this.group }&label=${ this.ui.selectedLabel }`)
         .then(res => res.json())
         .then(data => {
           if (data.errors) {
@@ -180,7 +190,7 @@ const app = new Vue({
       if (!this.ui.showDataset) return
       
       if (this.ui.selectedLabel === label) {
-        fetch(`https://cnrd.computer/toc/dataset/label/${ this.ui.selectedLabel }`)
+        fetch(`${ BASE_URL }/dataset?group=${ this.group }&label=${ this.ui.selectedLabel }`)
           .then(res => res.json())
           .then(data => {
             this.dataset = data
@@ -200,17 +210,23 @@ const app = new Vue({
       this.ui.showWriting = !this.ui.showWriting
     },
     fetchWriting: function () {
-      fetch(`https://cnrd.computer/toc/writing.json`)
+      fetch('writing.json')
         .then(res => res.json())
         .then(data => {
           this.writing = data
         })
     },
     fetchLabels: function () {
-      fetch(`https://cnrd.computer/toc/dataset/labels`)
+      fetch(`${ BASE_URL }/labels?group=${ this.group }`)
         .then(res => res.json())
         .then(data => {
-          this.labels = data.map(entry => entry.data.label)
+          if (data.hasOwnProperty('errors')) {
+            labels = []
+            this.labels = []
+            return
+          }
+
+          this.labels = data.map(entry => entry.data.label).sort(() => 0.5 - Math.random())
         })
     }
   }
