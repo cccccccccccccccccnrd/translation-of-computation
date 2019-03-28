@@ -94,7 +94,11 @@ app.use('/model', (req, res) => {
   }
 
   fs.readdir(path.join(__dirname, `archive/models/${ group }`), (err, files) => {
-    if (err) return console.log(err)
+    if (err) {
+      res.statusCode = 404
+      res.json({ errors: [`No model entries`] })
+      return console.log(err)
+    }
 
     const timestamps = files.map(file => Number(file)).filter(file => !isNaN(file))
     const latest = Math.max.apply(Math, timestamps)
