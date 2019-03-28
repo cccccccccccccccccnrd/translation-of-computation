@@ -5,9 +5,9 @@ require('@tensorflow/tfjs-node')
 /* const BASE_URL = 'http://localhost:5000' */
 const BASE_URL = 'https://translation-of-computation.com'
 
-async function save (model, group, timestamp) {
-  await model.save(`file://archive/models/${ group }/${ timestamp }`)
-  return `${ group }, ${ timestamp }`
+async function save (model, group, filename) {
+  await model.save(`file://archive/models/${ group }/${ filename }`)
+  return `${ group }, ${ filename }`
 }
 
 async function train ([labels, colors]) {
@@ -83,12 +83,19 @@ async function get (group, limit) {
   return [dataset, list]
 }
 
-async function init (group, timestamp) {
+async function init (group, filename) {
   const got = await get(group)
   const prepared = await prepare(got)
   const trained = await train(prepared)
-  const saved = await save(trained, group, timestamp)
+  const saved = await save(trained, group, filename)
   return saved
+}
+
+if (process.argv[2]) {
+  const group = process.argv[2]
+  const timestamp = Date.now()
+
+  init(group, timestamp)
 }
 
 module.exports = {

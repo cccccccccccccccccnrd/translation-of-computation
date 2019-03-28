@@ -14,7 +14,12 @@ body {
 }
 
 #app {
+  width: 100%;
   max-width: 400px;
+  margin: 2em;
+}
+
+section {
   margin: 2em;
 }
 
@@ -29,4 +34,20 @@ input {
 
 button {
   width: 100%;
+}
+
+li {
+  display: inline-block;
+  list-style-type: none;
+}
+
+.flex-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.entry {
+  display: block;
+  width: 1em;
+  height: 1em;
 }

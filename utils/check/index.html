@@ -14,15 +14,29 @@
 <body>
   <section id="app">
     <section>
-      <input v-model="ui.group" type="text" name="group" placeholder="group">
-      <input v-model="ui.clientId" type="text" name="client-id" placeholder="client-id">
+      <input v-model="group" type="text" name="group" placeholder="group">
+      <input v-model="clientId" type="text" name="client-id" placeholder="client-id">
       <button @click="get()">Get</button>
     </section>
-    <section>
+    <section class="flex-row-wrap">
       <li v-for="(item, index) in dataset" :key="item._id">
-        <span @click="info(item)" :style="{ background: 'rgb(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"
+        <span :style="{ background: 'rgb(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"
           class="entry"></span>
       </li>
+    </section>
+    <section>
+        <span v-for="(label, index) in labels">
+          <p>{{ label }}</p>
+          <span class="flex-row-wrap">
+            <li v-for="(item, index) in dataset" :key="item._id" v-if="item.data.label === label">
+              <span :style="{ background: 'rgb(' + item.data.color.r + ', ' + item.data.color.g + ', ' + item.data.color.b + ')'}"
+                class="entry"></span>
+          </span>
+          </li>
+        </span>
+      </section>
+    <section>
+      <p>{{ dataset.length }} {{ labels }} {{ labelsCreated }} {{ clients.length }} {{ clients }}</p>
     </section>
   </section>
   <script src="check.js"></script>
