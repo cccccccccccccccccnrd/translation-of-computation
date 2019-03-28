@@ -44,7 +44,7 @@ async function init (groups) {
         return [...new Set(data.map(entry => entry.group))]
       })
   }
-  console.log('hello')
+
   const archived = await archive(groups)
   return archived
 }
