@@ -51,6 +51,10 @@ const app = new Vue({
       fetch(`${ BASE_URL }/model?group=${ this.group }&time=latest`)
       .then(res => res.json())
       .then(async (data) => {
+        if (data.hasOwnProperty('errors')) {
+          return console.error('no trained model found')
+        }
+
         const timestamp = data.timestamp
         model = await tf.loadModel(`${ BASE_URL }/archive/models/${ this.group }/${ timestamp }/model.json`)
 
