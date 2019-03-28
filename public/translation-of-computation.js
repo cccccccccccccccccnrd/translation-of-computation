@@ -30,7 +30,7 @@ const app = new Vue({
       showAddLabel: false
     },
     prediction: true,
-    amount: 50,
+    amount: 25,
     count: 0
   },
   created: async function () {
