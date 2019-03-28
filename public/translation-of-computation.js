@@ -1,7 +1,7 @@
 let model, labels
 
-const BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://translation-of-computation.com'
-const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'wss://translation-of-computation.com/ws'
+const BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'http://translation-of-computation.com'
+const WS_URL = window.location.hostname === 'localhost' ? 'ws://localhost:5001' : 'ws://translation-of-computation.com/ws'
 const socket = new WebSocket(WS_URL)
 
 const app = new Vue({

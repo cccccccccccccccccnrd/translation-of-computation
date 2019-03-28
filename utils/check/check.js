@@ -1,4 +1,4 @@
-const BASE_URL = 'https://translation-of-computation.com'
+const BASE_URL = 'http://translation-of-computation.com'
 
 const app = new Vue({
   el: '#app',
@@ -6,7 +6,8 @@ const app = new Vue({
     group: '',
     clientId: '',
     dataset: [],
-    labelsCreated: []
+    labelsCreated: [],
+    entry: ''
   },
   computed: {
     labels: function () {
@@ -40,6 +41,11 @@ const app = new Vue({
 
         this.labelsCreated = data.map(entry => entry.data.label)
       })
+
+      this.entry = ''
+    },
+    info: function (item) {
+      this.entry = item
     }
   }
 })

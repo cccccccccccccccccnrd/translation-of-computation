@@ -3,7 +3,7 @@ const tf = require('@tensorflow/tfjs')
 require('@tensorflow/tfjs-node')
 
 /* const BASE_URL = 'http://localhost:5000' */
-const BASE_URL = 'https://translation-of-computation.com'
+const BASE_URL = 'http://translation-of-computation.com'
 
 async function save (model, group, filename) {
   await model.save(`file://archive/models/${ group }/${ filename }`)
