@@ -40,7 +40,7 @@ async function train ([labels, colors]) {
   })
 
   const options = {
-    epochs: 100,
+    epochs: 3,
     validationSplit: 0.1,
     shuffle: true
   }
@@ -91,12 +91,12 @@ async function init (group, filename) {
   return saved
 }
 
-if (process.argv[2]) {
+/* if (process.argv[2]) {
   const group = process.argv[2]
   const timestamp = Date.now()
 
   init(group, timestamp)
-}
+} */
 
 module.exports = {
   init

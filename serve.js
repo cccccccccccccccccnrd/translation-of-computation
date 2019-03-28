@@ -4,32 +4,6 @@ const express = require('express')
 const cors = require('cors')
 const WebSocket = require('ws')
 const Datastore = require('nedb')
-const train = require('./utils/train')
-
-async function archive() {
-  const timestamp = Date.now()
-
-  fs.readFile(path.join(__dirname, 'store-dataset'), (err, data) => {
-    if (err) console.log(err)
-  
-    fs.writeFile(path.join(__dirname, `archive/datasets/${ timestamp }`), data, (err) => {
-      if (err) console.log(err)
-      console.log(`saved ${ timestamp } dataset`)
-    })
-  })
-  
-  fs.writeFile(path.join(__dirname, `archive/labels/${ timestamp }`), JSON.stringify(labels), (err) => {
-    if (err) console.log(err)
-    console.log(`saved ${ timestamp } labels`)
-  })
-  
-  const groups = [...new Set(labels.map(entry => entry.group))]
-
-  for (const group of groups) {
-    const trained = await train.init(group, timestamp)
-    console.log(trained)
-  }
-}
 
 const storeDataset = new Datastore({ filename: path.join(__dirname, 'store-dataset'), autoload: true })
 const storeLabels = new Datastore({ filename: path.join(__dirname, 'store-labels'), autoload: true })
@@ -49,7 +23,6 @@ function setLabels() {
       console.log('No labels entries')
     } else {
       labels = entries
-      /* archive() */
     }
   })
 }
@@ -118,7 +91,7 @@ app.use('/model', (req, res) => {
     return
   }
 
-  fs.readdir(`archive/models/${ group }`, (err, files) => {
+  fs.readdir(path.join(__dirname, `archive/models/${ group }`), (err, files) => {
     if (err) return console.log(err)
 
     const timestamps = files.map(file => Number(file)).filter(file => !isNaN(file))
