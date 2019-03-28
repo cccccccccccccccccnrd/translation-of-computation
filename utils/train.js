@@ -40,7 +40,7 @@ async function train ([labels, colors]) {
   })
 
   const options = {
-    epochs: 3,
+    epochs: 100,
     validationSplit: 0.1,
     shuffle: true
   }
