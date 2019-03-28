@@ -30,6 +30,8 @@ function setLabels() {
 setLabels()
 
 app.use('/turk', express.static(path.join(__dirname, 'public')))
+app.use('/turk01', express.static(path.join(__dirname, 'public')))
+app.use('/turk02', express.static(path.join(__dirname, 'public')))
 app.use('/kisd', express.static(path.join(__dirname, 'public')))
 
 /* app.use('/', express.static(path.join(__dirname, 'public'))) */
