@@ -52,7 +52,7 @@ const app = new Vue({
       .then(res => res.json())
       .then(async (data) => {
         if (data.hasOwnProperty('errors')) {
-          return console.error('no trained model found')
+          return console.warn('no trained model found')
         }
 
         const timestamp = data.timestamp
