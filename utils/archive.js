@@ -3,7 +3,7 @@ const fs = require('fs')
 const fetch = require('node-fetch')
 const train = require('./train')
 
-const BASE_URL = 'http://translation-of-computation.com'
+const BASE_URL = 'https://translation-of-computation.com'
 
 async function archive(groups) {
   const timestamp = Date.now()

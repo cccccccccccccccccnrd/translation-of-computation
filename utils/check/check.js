@@ -1,4 +1,4 @@
-const BASE_URL = 'http://translation-of-computation.com'
+const BASE_URL = 'https://translation-of-computation.com'
 
 const app = new Vue({
   el: '#app',
