@@ -1,0 +1,45 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(10, 12.5%);
+  grid-template-rows: repeat(8, 10%);
+  grid-column-gap: 2%;
+  grid-row-gap: 1.6%;
+  grid-template-areas: 
+    "text text text . chart chart . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . ."
+    "text text text . . . . .";
+  width: 100vw;
+  height: 100vh;
+  padding: 4%;
+  font-family: 'Inconsolata', monospace;
+  font-size: 20px;
+  background: black;
+  -webkit-font-smoothing: antialiased;
+}
+
+#text {
+  grid-area: text;
+}
+
+.chart {
+  grid-area: chart;
+  background: blue;
+}
+
+p {
+  margin: 0 0 1em 0;
+  color: white;
+}

@@ -43,9 +43,6 @@ const app = new Vue({
       })
 
       this.entry = ''
-    },
-    info: function (item) {
-      this.entry = item
     }
   }
 })
