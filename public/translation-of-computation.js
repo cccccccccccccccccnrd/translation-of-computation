@@ -29,7 +29,7 @@ const app = new Vue({
       showWriting: false,
       showAddLabel: false
     },
-    prediction: false,
+    prediction: true,
     amount: 50,
     count: 0
   },
