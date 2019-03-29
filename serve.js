@@ -4,6 +4,7 @@ const express = require('express')
 const cors = require('cors')
 const WebSocket = require('ws')
 const Datastore = require('nedb')
+const archive = require('./utils/archive')
 
 const storeDataset = new Datastore({ filename: path.join(__dirname, 'store-dataset'), autoload: true })
 const storeLabels = new Datastore({ filename: path.join(__dirname, 'store-labels'), autoload: true })
@@ -184,7 +185,26 @@ wss.on('connection', (ws) => {
       if (validateColor(msg.group, msg.data)) {
         storeDataset.insert(entry)
         counter[msg.group]++
-        console.log(counter)
+
+        if (counter[msg.group] % 100 === 0) {
+          archive.init([msg.group])
+            .then(logs => {
+              console.log(logs)
+              const filename = logs.filter(log => log.group === msg.group)[0].filename
+
+              wss.clients.forEach((client) => {
+                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                  const update = {
+                    group: msg.group,
+                    do: 'update-model',
+                    timestamp: filename
+                  }
+          
+                  client.send(JSON.stringify(update))
+                }
+              })
+            })
+        }
 
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {

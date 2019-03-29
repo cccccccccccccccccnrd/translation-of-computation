@@ -7,7 +7,7 @@ const BASE_URL = 'https://translation-of-computation.com'
 
 async function save (model, group, filename) {
   await model.save(`file://archive/models/${ group }/${ filename }`)
-  return `${ group }, ${ filename }`
+  return { group: group, filename: filename }
 }
 
 async function train ([labels, colors]) {
