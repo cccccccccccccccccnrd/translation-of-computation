@@ -185,6 +185,7 @@ wss.on('connection', (ws) => {
       if (validateColor(msg.group, msg.data)) {
         storeDataset.insert(entry)
         counter[msg.group]++
+        console.log(counter)
 
         if (counter[msg.group] % 100 === 0) {
           archive.init([msg.group])

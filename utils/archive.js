@@ -49,13 +49,13 @@ async function init (groups) {
   return archived
 }
 
-if (process.argv[2]) {
+/* if (process.argv[2]) {
   const groups = process.argv.slice(2)
   archive(groups)
 } else {
   init()
     .then(logs => console.log(logs))
-}
+} */
 
 module.exports = {
   init
