@@ -1,0 +1,47 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+#app {
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  background: black;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 20px;
+}
+
+#spectrum {
+  width: 100%;
+  max-width: 50%;
+  height: 100%;
+  margin: 0 2em;
+}
+
+#left {}
+
+#right {
+  text-align: right;
+}
+
+.entry {
+  display: block;
+  height: 0.5vh; /* 100vh / 200 steps */
+}
+
+.labels {
+  margin: 0 1em;
+}
+
+.labels li {
+  height: 4vh;
+  line-height: 4vh;
+}

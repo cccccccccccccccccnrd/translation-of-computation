@@ -32,17 +32,20 @@ const app = new Vue({
         })
       
       fetch(`${ BASE_URL }/labels?group=${ this.group }&client=${ this.clientId }`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.hasOwnProperty('errors')) {
-          this.labelsCreated = []
-          return
-        }
+        .then(res => res.json())
+        .then(data => {
+          if (data.hasOwnProperty('errors')) {
+            this.labelsCreated = []
+            return
+          }
 
-        this.labelsCreated = data.map(entry => entry.data.label)
-      })
+          this.labelsCreated = data.map(entry => entry.data.label)
+        })
 
       this.entry = ''
+    },
+    info: function (item) {
+      this.entry = item
     }
   }
 })

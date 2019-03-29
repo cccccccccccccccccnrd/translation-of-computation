@@ -14,6 +14,7 @@ app.use(cors())
 
 const port = 5000
 let labels = []
+let counter = {}
 
 function setLabels() {
   storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
@@ -29,9 +30,27 @@ function setLabels() {
 
 setLabels()
 
+function setCounter() {
+  storeDataset.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
+    if (err) console.log(err)
+
+    const dataset = entries
+    const groups = [...new Set(dataset.map(entry => entry.group))]
+
+    groups.forEach(group => {
+      const count = dataset.filter(entry => entry.group === group)
+      counter[group] = count.length
+    })
+
+    console.log(counter)
+  })  
+}
+
+setCounter()
+
+app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
 app.use('/turk01', express.static(path.join(__dirname, 'public')))
-app.use('/turk02', express.static(path.join(__dirname, 'public')))
 app.use('/kisd', express.static(path.join(__dirname, 'public')))
 
 /* app.use('/', express.static(path.join(__dirname, 'public'))) */
@@ -159,7 +178,9 @@ wss.on('connection', (ws) => {
     if (msg.do === 'insert-color') {
       if (validateColor(msg.group, msg.data)) {
         storeDataset.insert(entry)
-  
+        counter[msg.group]++
+        console.log(counter)
+        
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             const update = {
