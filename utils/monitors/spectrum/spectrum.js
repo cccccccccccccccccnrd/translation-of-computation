@@ -11,7 +11,8 @@ const app = new Vue({
     labels: {},
     left: [],
     right: [],
-    prediction: true
+    prediction: true,
+    updating: false
   },
   created: async function () {
     this.spectrum = this.getSpectrum(200)
@@ -63,6 +64,8 @@ const app = new Vue({
     init: async function () {
       console.log('initin')
 
+      this.updating = true
+
       this.left = []
       this.right = []
 
@@ -84,6 +87,10 @@ const app = new Vue({
             }
           }
         })
+        
+        setTimeout(() => {
+          this.updating = false
+        }, 2000)
       })
     },
     getModel: async function (group) {
