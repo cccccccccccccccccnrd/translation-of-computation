@@ -189,7 +189,7 @@ wss.on('connection', (ws) => {
         counter[msg.group]++
         console.log(counter)
 
-        if (counter[msg.group] % 20 === 0) {
+        if (counter[msg.group] % 100 === 0) {
           archive.init([msg.group])
             .then(logs => {
               console.log(logs)

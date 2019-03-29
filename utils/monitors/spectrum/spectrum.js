@@ -5,7 +5,7 @@ const socket = new WebSocket(WS_URL)
 const app = new Vue({
   el: '#app',
   data: {
-    groups: ['turk', 'turk01'],
+    groups: ['test', 'turk01'],
     spectrum: [],
     models: {},
     labels: {},
@@ -20,7 +20,7 @@ const app = new Vue({
       const msg = JSON.parse(message.data)
 
       console.log(msg)
-      if (msg.do === 'update-model') this.init()
+      if (msg.do === 'update-model' && this.groups.indexOf(msg.group) != -1) this.init()
     })
 
     if (this.prediction) {
