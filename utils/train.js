@@ -6,7 +6,7 @@ require('@tensorflow/tfjs-node')
 const BASE_URL = 'https://translation-of-computation.com'
 
 async function save (model, group, filename) {
-  await model.save(`file://archive/models/${ group }/${ filename }`)
+  await model.save(`file:/${ path.join(__dirname, `../archive/models/${ group }/${ filename }`) }`)
   return { group: group, filename: filename }
 }
 
