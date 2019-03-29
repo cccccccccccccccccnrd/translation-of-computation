@@ -62,13 +62,15 @@ const app = new Vue({
     },
     init: async function () {
       console.log('initin')
+
+      this.left = []
+      this.right = []
+
       this.groups.forEach(async (group) => {
         const model = await this.getModel(group)
 
         this.models[group] = model.model
         this.labels[group] = model.labels
-        this.left = []
-        this.right = []
 
         this.spectrum.forEach(async (color, index) => {
           index = index + 5
