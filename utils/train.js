@@ -1,3 +1,4 @@
+const path = require('path')
 const fetch = require('node-fetch')
 const tf = require('@tensorflow/tfjs')
 require('@tensorflow/tfjs-node')
