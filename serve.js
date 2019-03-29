@@ -39,7 +39,12 @@ function setCounter() {
 
     groups.forEach(group => {
       const count = dataset.filter(entry => entry.group === group)
-      counter[group] = count.length
+
+      if (count) {
+        counter[group] = count.length
+      } else {
+        counter[group] = 0
+      }
     })
 
     console.log(counter)
@@ -180,7 +185,7 @@ wss.on('connection', (ws) => {
         storeDataset.insert(entry)
         counter[msg.group]++
         console.log(counter)
-        
+
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             const update = {
