@@ -44,7 +44,7 @@ const app = new Vue({
   },
   created: function () {
     this.left = this.contexts.left[0]
-    this.right = this.contexts.right[0]
+    this.right = this.contexts.right[1]
 
     this.scroll('left')
     this.scroll('right')
@@ -57,11 +57,11 @@ const app = new Vue({
   },
   methods: {
     scroll: function (side) {
-      this.offset[side] = 0
+      this.offset[side] = document.body.offsetHeight
 
       const interval = setInterval(() => {
-        this.offset[side] = this.offset[side] + 1
-        if (this.offset[side] >= this.$refs[side].offsetHeight + 20) {
+        this.offset[side] = this.offset[side] - 1
+        if (this.offset[side] <= -this.$refs[side].offsetHeight - 20) {
           clearInterval(interval)
 
           if (this.pos[side] < this.contexts[side].length - 1) {
@@ -73,7 +73,7 @@ const app = new Vue({
           this[side] = this.contexts[side][this.pos[side]]
           this.scroll(side)
         }
-      }, 100)
+      }, 5)
     }
   }
 })

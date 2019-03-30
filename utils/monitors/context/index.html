@@ -17,7 +17,7 @@
       <section class="image-container">
         <img :src="left.img">
       </section>
-      <section class="text-container" :style="{ transform: 'translateY(-' + offset.left + 'px)' }" ref="left">
+      <section class="text-container" :style="{ transform: 'translateY(' + offset.left + 'px)' }" ref="left">
         <section v-for="n in 3">
           <p class="title">{{ left.title }}</p>
           <p class="source"><span v-html="left.source"></span></p>
@@ -29,8 +29,8 @@
       <section class="image-container">
           <img :src="right.img">
       </section>
-      <section class="text-container" :style="{ transform: 'translateY(-' + offset.right + 'px)' }" ref="right">
-          <section v-for="n in 5">
+      <section class="text-container" :style="{ transform: 'translateY(' + offset.right + 'px)' }" ref="right">
+          <section v-for="n in 3">
               <p class="title">{{ right.title }}</p>
               <p class="source"><span v-html="right.source"></span></p>
               <p class="text"><span v-html="right.text"></span></p>
