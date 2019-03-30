@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>CONTEXT</title>
+</head>
+<body>
+  <section id="app">
+    <section class="context">
+      <section class="image-container">
+        <img :src="left.img">
+      </section>
+      <section class="text-container" :style="{ transform: 'translateY(-' + offset.left + 'px)' }" ref="left">
+        <section v-for="n in 3">
+          <p class="title">{{ left.title }}</p>
+          <p class="source"><span v-html="left.source"></span></p>
+          <p class="text"><span v-html="left.text"></span></p>
+        </section>
+      </section>
+    </section>
+    <section class="context">
+      <section class="image-container">
+          <img :src="right.img">
+      </section>
+      <section class="text-container" :style="{ transform: 'translateY(-' + offset.right + 'px)' }" ref="right">
+          <section v-for="n in 5">
+              <p class="title">{{ right.title }}</p>
+              <p class="source"><span v-html="right.source"></span></p>
+              <p class="text"><span v-html="right.text"></span></p>
+            </section>
+      </section>
+    </section>
+  </section>
+  <script src="context.js"></script>
+</body>
+</html>

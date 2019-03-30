@@ -1,0 +1,53 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+  background: black;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 20px;
+}
+
+.context {
+  position: relative;
+  flex: 1;
+  margin: 20px;
+}
+
+.image-container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.context img {
+  align-self: center;
+  width: 80%;
+  z-index: 5;
+}
+
+.text-container p {
+  margin: 0 0 1em 0;
+}
+
+.context p {
+
+}
+
+.title {
+  font-size: 1.5em;
+}
+
+.source {
+  word-break: break-all;
+}

@@ -33,6 +33,7 @@ li {
 #white p {
   color: black;
   line-height: 100vh;
+  text-transform: uppercase;
 }
 
 #spectrum {
