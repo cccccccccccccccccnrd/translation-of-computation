@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>METRIC</title>
+</head>
+<body>
+  <section id="app">
+    <p class="title uppercase">classifying a spectrum and the pattern recognition of human bias</p>
+    <p class="uppercase">kisd length {{ datasets[groups[0]].length }}, turk length {{ datasets[groups[1]].length }}</p>
+    <p class="uppercase">kisd labels {{ labels[groups[0]] }}</p>
+    <p class="uppercase">turk labels {{ labels[groups[1]] }}</p>
+    <p class="uppercase">kisd latest classification {{ datasets[groups[0]][datasets[groups[0]].length - 1] }}</p>
+    <p class="uppercase">turk latest classification {{ datasets[groups[1]][datasets[groups[1]].length - 1] }}</p>
+  </section>
+  <script src="metric.js"></script>
+</body>
+</html>
