@@ -5,14 +5,14 @@ const socket = new WebSocket(WS_URL)
 const app = new Vue({
   el: '#app',
   data: {
-    groups: ['test', 'turk01'],
+    groups: ['test', 'turk'],
     datasets: {
       test: [],
-      turk01: []
+      turk: []
     },
     labels: {
       test: [],
-      turk01: []
+      turk: []
     },
     prediction: true,
     updating: false
