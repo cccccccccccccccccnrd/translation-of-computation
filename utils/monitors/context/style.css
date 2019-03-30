@@ -37,11 +37,7 @@ html, body {
 }
 
 .text-container p {
-  margin: 0 0 1em 0;
-}
-
-.context p {
-
+  margin: 0 0 20px 0;
 }
 
 .title {

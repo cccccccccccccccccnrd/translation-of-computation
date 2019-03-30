@@ -71,7 +71,7 @@ const app = new Vue({
 
       const interval = setInterval(() => {
         this.offset[side] = this.offset[side] - 1
-        if (this.offset[side] <= -this.$refs[side].offsetHeight - 20 + document.body.offsetHeight) {
+        if (this.offset[side] <= -this.$refs[side].offsetHeight + document.body.offsetHeight) {
           clearInterval(interval)
 
           if (this.pos[side] < this.contexts[side].length - 1) {
@@ -83,7 +83,7 @@ const app = new Vue({
           this[side] = this.contexts[side][this.pos[side]]
           this.scroll(side)
         }
-      }, 70)
+      }, 25)
     }
   }
 })
