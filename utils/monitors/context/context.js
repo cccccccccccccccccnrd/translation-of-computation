@@ -83,7 +83,7 @@ const app = new Vue({
           this[side] = this.contexts[side][this.pos[side]]
           this.scroll(side)
         }
-      }, 25)
+      }, 60)
     }
   }
 })
