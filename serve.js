@@ -54,6 +54,20 @@ function setCounter() {
 
 setCounter()
 
+function reset(group) {
+  const datasetAmount = await storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  const labelsAmount = await storeLabels.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  return { dataset: datasetAmount, labels: labelsAmount }
+}
+
+reset('kisd')
+
 app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
 app.use('/turk01', express.static(path.join(__dirname, 'public')))
