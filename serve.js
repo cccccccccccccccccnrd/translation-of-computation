@@ -66,7 +66,7 @@ function reset(group) {
   return { dataset: datasetAmount, labels: labelsAmount }
 }
 
-reset('kisd')
+console.log(reset('kisd'))
 
 app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
