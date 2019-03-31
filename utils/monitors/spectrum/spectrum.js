@@ -5,7 +5,7 @@ const socket = new WebSocket(WS_URL)
 const app = new Vue({
   el: '#app',
   data: {
-    groups: ['test', 'turk01'],
+    groups: ['kisd', 'turk'],
     spectrum: [],
     models: {},
     labels: {},
