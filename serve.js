@@ -29,7 +29,7 @@ function reset (group) {
   console.log(`reset group: ${ group }`)
 }
 
-reset('kisd')
+/* reset('kisd') */
 
 function setLabels() {
   storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
