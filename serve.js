@@ -66,7 +66,7 @@ async function reset (group) {
   console.log(`removed ${ group }: dataset: ${ datasetAmount }, labels: ${ labelsAmount }`)
 }
 
-/* reset('kisd') */
+reset('kisd')
 
 app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
@@ -198,7 +198,10 @@ wss.on('connection', (ws) => {
     if (msg.do === 'insert-color') {
       if (validateColor(msg.group, msg.data)) {
         storeDataset.insert(entry)
+
+        if (counter.hasOwnProperty(msg.group) === false) counter[msg.group] = 0
         counter[msg.group]++
+
         console.log(counter)
 
         if (counter[msg.group] % 100 === 0) {
