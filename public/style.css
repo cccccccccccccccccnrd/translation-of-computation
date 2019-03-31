@@ -210,7 +210,7 @@ blockquote {
 
 .indent {
   box-sizing: border-box;
-  max-width: 440px;
+  max-width: 600px;
   height: 100%;
   padding: 20px;
 }
