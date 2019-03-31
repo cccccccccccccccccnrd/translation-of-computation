@@ -17,16 +17,16 @@ const port = 5000
 let labels = []
 let counter = {}
 
-async function reset (group) {
-  const datasetAmount = await storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+function reset (group) {
+  storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
     return numRemoved
   })
 
-  const labelsAmount = await storeLabels.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+  storeLabels.remove({ group: group }, { multi: true }, (err, numRemoved) => {
     return numRemoved
   })
 
-  console.log(`removed ${ group }: dataset: ${ datasetAmount }, labels: ${ labelsAmount }`)
+  console.log(`reset group: ${ group }`)
 }
 
 reset('kisd')
