@@ -18,6 +18,8 @@ let labels = []
 let counter = {}
 
 function remove (group, label) {
+  if (!group || !label) return 'nope'
+
   storeDataset.remove({ group: group, 'data.label': label }, { multi: true }, (err, numRemoved) => {
     return numRemoved
   })
