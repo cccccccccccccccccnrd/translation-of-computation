@@ -167,9 +167,11 @@ app.listen(port)
 function validateLabel (group, data) {
   const labelsGroup = labels.filter(entry => entry.group === group).map(entry => entry.data.label)
 
-  if (labelsGroup.indexOf(data.label) !== -1) {
+  if (data.label === '') {
     return false
-  } else if (/\d/.test(data.label)) {
+  } else if (labelsGroup.indexOf(data.label) !== -1) {
+    return false
+  } else if (/\d/.test(data.label) || /(?!-)\W/.test(data.label) || /\W$/.test(data.label)) {
     return false
   } else {
     return true
