@@ -43,7 +43,8 @@ function reset (group) {
   console.log(`reset group: ${ group }`)
 }
 
-/* remove('test', 'hallo') */
+remove('kisd', '')
+remove('turk', '')
 /* reset('kisd') */
 
 function setLabels() {
