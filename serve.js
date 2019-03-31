@@ -17,6 +17,18 @@ const port = 5000
 let labels = []
 let counter = {}
 
+function remove (label) {
+  storeDataset.remove({ 'data.label': label }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  storeLabels.remove({ 'data.label': label }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  console.log(`removed label: ${ group }`)
+}
+
 function reset (group) {
   storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
     return numRemoved
@@ -29,6 +41,7 @@ function reset (group) {
   console.log(`reset group: ${ group }`)
 }
 
+remove('ichwillleerzeichenmachenbittefelixhatziemlichgrossenpimmel')
 /* reset('kisd') */
 
 function setLabels() {
