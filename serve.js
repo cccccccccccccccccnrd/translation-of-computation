@@ -17,6 +17,20 @@ const port = 5000
 let labels = []
 let counter = {}
 
+async function reset (group) {
+  const datasetAmount = await storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  const labelsAmount = await storeLabels.remove({ group: group }, { multi: true }, (err, numRemoved) => {
+    return numRemoved
+  })
+
+  console.log(`removed ${ group }: dataset: ${ datasetAmount }, labels: ${ labelsAmount }`)
+}
+
+reset('kisd')
+
 function setLabels() {
   storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
@@ -53,20 +67,6 @@ function setCounter() {
 }
 
 setCounter()
-
-async function reset (group) {
-  const datasetAmount = await storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
-    return numRemoved
-  })
-
-  const labelsAmount = await storeLabels.remove({ group: group }, { multi: true }, (err, numRemoved) => {
-    return numRemoved
-  })
-
-  console.log(`removed ${ group }: dataset: ${ datasetAmount }, labels: ${ labelsAmount }`)
-}
-
-/* reset('kisd') */
 
 app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
