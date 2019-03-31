@@ -70,7 +70,7 @@ input:focus {
 }
 
 .input-text {
-  padding: 0.2em 0.5em 0.25em 0.5em;
+  padding: 0.1em 0.5em 0.25em 0.5em;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 1em;
   border: 1px solid white;
