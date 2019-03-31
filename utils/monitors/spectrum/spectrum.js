@@ -28,8 +28,6 @@ const app = new Vue({
       this.init()
     }
   },
-  computed: {
-  },
   methods: {
     getSpectrum: function (steps) {
       const iteration = Math.floor(steps / 6)
@@ -56,6 +54,21 @@ const app = new Vue({
           b = b - step
         }
     
+        spectrum.push({ r, g, b })
+      }
+    
+      return spectrum
+    },
+    getRandomSpectrum: function (steps) {
+      const iteration = Math.floor(steps / 6)
+
+      let spectrum = []
+
+      for (let i = 0; i < steps; i++) {
+        const r = Math.floor(Math.random() * 0)
+        const g = Math.floor(Math.random() * 100)
+        const b = Math.floor(Math.random() * 250)
+
         spectrum.push({ r, g, b })
       }
     
