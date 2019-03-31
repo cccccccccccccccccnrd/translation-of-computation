@@ -43,9 +43,8 @@ function reset (group) {
   console.log(`reset group: ${ group }`)
 }
 
-remove('kisd', '')
-remove('turk', '')
-/* reset('kisd') */
+/* remove('kisd', '')
+remove('turk', '') */
 
 function setLabels() {
   storeLabels.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
