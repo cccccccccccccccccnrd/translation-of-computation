@@ -15,7 +15,7 @@
 </head>
 
 <body class="flex">
-  <section id="app" class="indent flex" :class="{ 'indent-wide': ui.showWriting }">
+  <section id="app" class="indent" :class="{ 'indent-wide': ui.showWriting }">
     <section class="information" v-if="group === 'turk'">
         <p v-if="count < amount">client-id will be displayed in {{ amount - count }} classifications.</p>
         <p v-if="count >= amount">client-id: {{ client }} <br> Thank you very much.</p>
