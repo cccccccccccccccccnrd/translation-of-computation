@@ -305,7 +305,7 @@ blockquote {
   font-style: italic;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 640px) {
   .indent {
     max-width: 100%;
   }
