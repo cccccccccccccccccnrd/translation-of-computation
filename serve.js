@@ -54,7 +54,7 @@ function setCounter() {
 
 setCounter()
 
-function reset(group) {
+async function reset (group) {
   const datasetAmount = await storeDataset.remove({ group: group }, { multi: true }, (err, numRemoved) => {
     return numRemoved
   })
