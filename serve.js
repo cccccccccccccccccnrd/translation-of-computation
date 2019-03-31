@@ -63,7 +63,7 @@ async function reset (group) {
     return numRemoved
   })
 
-  console.log(`removed ${ group }: ${ { dataset: datasetAmount, labels: labelsAmount } }`)
+  console.log(`removed ${ group }: dataset: ${ datasetAmount }, labels: ${ labelsAmount }`)
 }
 
 reset('kisd')
