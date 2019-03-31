@@ -25,12 +25,12 @@ const app = new Vue({
       selectedLabel: '',
       missingLabel: '',
       entryInfo: null,
-      showDataset: false,
+      showDataset: true,
       showWriting: false,
       showAddLabel: false
     },
     prediction: true,
-    amount: 25,
+    amount: 50,
     count: 0
   },
   created: async function () {

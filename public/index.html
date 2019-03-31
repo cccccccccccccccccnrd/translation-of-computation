@@ -43,8 +43,8 @@
       </section>
     </section>
     <section>
-      <p>— <span @click="toggleDataset" class="link">dataset</span></p>
-      <section v-if="ui.showDataset">
+      <!-- <p>— <span @click="toggleDataset" class="link">dataset</span></p> -->
+      <section v-if="ui.showDataset" class="dataset-container">
         <select @change="fetchDataset" v-model="ui.selectedLabel">
           <option disabled value="">select label</option>
           <option v-for="(label, index) in labels" :key="label">{{ label }}</option>

@@ -10,30 +10,32 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: 'Inconsolata', monospace;
-  font-size: 15px;
+  font-size: 20px;
+  color: white;
+  background: black;
 }
 
 #app {
   width: 100%;
-  max-width: 400px;
-  margin: 2em;
+  /* max-width: 40%; */
+  margin: 1em;
 }
 
 section {
-  margin: 2em;
+  margin: 0 0 2em 0;
 }
 
 input {
   box-sizing: border-box;
   width: 100%;
-  margin: 0.25em 0;
   padding: 0.5em;
-  font-family: 'Inconsolata', monospace;
   font-size: 1em;
 }
 
 button {
   width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
 }
 
 li {

@@ -31,8 +31,6 @@ function setLabels() {
 
 setLabels()
 
-console.log(__dirname)
-
 function setCounter() {
   storeDataset.find({}).sort({ timestamp: 1 }).exec((err, entries) => {
     if (err) console.log(err)
