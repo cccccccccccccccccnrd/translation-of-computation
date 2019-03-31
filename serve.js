@@ -63,10 +63,10 @@ async function reset (group) {
     return numRemoved
   })
 
-  return { dataset: datasetAmount, labels: labelsAmount }
+  console.log(`removed ${ group }: ${ { dataset: datasetAmount, labels: labelsAmount } }`)
 }
 
-console.log(reset('kisd'))
+reset('kisd')
 
 app.use('/test', express.static(path.join(__dirname, 'public')))
 app.use('/turk', express.static(path.join(__dirname, 'public')))
