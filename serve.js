@@ -26,7 +26,7 @@ function remove (label) {
     return numRemoved
   })
 
-  console.log(`removed label: ${ group }`)
+  console.log(`removed label: ${ label }`)
 }
 
 function reset (group) {
