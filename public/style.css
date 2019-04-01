@@ -313,6 +313,16 @@ blockquote {
   .writing {
     column-count: 1;
   }
+
+  .button:hover {
+    color: white;
+    background: black;
+  }
+
+  .button:active {
+    color: black;
+    background: white;
+  }
 }
 
 @media screen and (max-width: 375px) {
